@@ -1,0 +1,229 @@
+OBJECTS[
+	CAMERA{
+		POSITION(
+			x=2;
+			y=1;
+			z=3;
+		)
+		
+		LOOKAT(
+			x=0;
+			y=0;
+			z=0;
+		)
+		
+		UP(
+			x=0;
+			y=1;
+			z=0;
+		)
+	}
+	
+	LIGHT{
+		POSITION(
+			x=5;
+			y=0;
+			z=5;
+		)
+		
+		COLOR(
+			r=.8;
+			g=.8;
+			b=0.8;
+		)
+	}
+	
+	LIGHT{
+		POSITION(
+			x=-5;
+			y=0;
+			z=-5;
+		)
+		
+		COLOR(
+			r=.8;
+			g=.8;
+			b=0.8;
+		)
+	}
+	
+	BAR{
+		DIMENSIONS(
+			a=1;
+			b=20;
+			c=20;
+		)
+		
+		POSITION(
+			x=-10;
+			y=0;
+			z=0;
+			alpha=0;
+			beta=0;
+			gamma=0;
+		)
+		
+		MATERIAL(
+			MIRROR;
+			reflectivity=.85;
+		)
+	}
+	
+	BAR{
+		DIMENSIONS(
+			a=1;
+			b=20;
+			c=20;
+		)
+		
+		POSITION(
+			x=10;
+			y=0;
+			z=0;
+			alpha=0;
+			beta=0;
+			gamma=0;
+		)
+		
+		MATERIAL(
+			MIRROR;
+			reflectivity=.85;
+		)
+	}
+	
+	BAR{
+		DIMENSIONS(
+			a=20;
+			b=1;
+			c=20;
+		)
+		
+		POSITION(
+			x=0;
+			y=-10;
+			z=0;
+			alpha=0;
+			beta=0;
+			gamma=0;
+		)
+		
+		MATERIAL(
+			MIRROR;
+			reflectivity=.85;
+		)
+	}
+	
+	BAR{
+		DIMENSIONS(
+			a=20;
+			b=1;
+			c=20;
+		)
+		
+		POSITION(
+			x=0;
+			y=10;
+			z=0;
+			alpha=0;
+			beta=0;
+			gamma=0;
+		)
+		
+		MATERIAL(
+			MIRROR;
+			reflectivity=.85;
+		)
+	}
+	
+	BAR{
+		DIMENSIONS(
+			a=20;
+			b=20;
+			c=1;
+		)
+		
+		POSITION(
+			x=0;
+			y=0;
+			z=-10;
+			alpha=0;
+			beta=0;
+			gamma=0;
+		)
+		
+		MATERIAL(
+			MIRROR;
+			reflectivity=.85;
+		)
+	}
+	
+	BAR{
+		DIMENSIONS(
+			a=20;
+			b=20;
+			c=1;
+		)
+		
+		POSITION(
+			x=0;
+			y=0;
+			z=10;
+			alpha=0;
+			beta=0;
+			gamma=0;
+		)
+		
+		MATERIAL(
+			MIRROR;
+			reflectivity=.85;
+		)
+	}
+	
+	SPHERE{
+		DIMENSIONS(
+			a=1;
+			b=1;
+			c=1;
+		)
+		
+		POSITION(
+			x=0;
+			y=0;
+			z=0;
+			alpha=0;
+			beta=0;
+			gamma=0;
+		)
+		
+		MATERIAL(
+			MIRROR;
+			diffuseB=.8;
+			diffuseG=.8;
+			diffuseR=.8;
+			reflectivity=.85;
+		)
+	}
+	
+	//SPHERE{
+		RADIUS(
+			r=.2;
+		)
+		
+		POSITION(
+			x=3;
+			y=3;
+			z=3;
+			alpha=0;
+			beta=0;
+			gamma=0;
+		)
+		
+		MATERIAL(
+			GLASS;
+			e/missiveB=1;
+			reflectivity=0.8;
+			diffuseB=0.8;
+			diffuseG=0.8;
+		)
+	}
+]

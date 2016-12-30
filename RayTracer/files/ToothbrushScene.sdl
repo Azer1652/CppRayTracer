@@ -1,0 +1,672 @@
+OBJECTS[
+	CAMERA{
+		POSITION(
+			x=3;
+			y=3;
+			z=4;
+		)
+		
+		LOOKAT(
+			x=0;
+			y=0;
+			z=1.5;
+		)
+		
+		UP(
+			x=0;
+			y=1;
+			z=0;
+		)
+	}
+	
+	LIGHT{
+		POSITION(
+			x=0;
+			y=5;
+			z=0;
+		)
+		
+		COLOR(
+			r=1;
+			g=1;
+			b=1;
+		)
+	}
+	
+	LIGHT{
+		POSITION(
+			x=5;
+			y=5;
+			z=0;
+		)
+		
+		COLOR(
+			r=.5;
+			g=.5;
+			b=.5;
+		)
+	}
+	
+	LIGHT{
+		POSITION(
+			x=-5;
+			y=5;
+			z=0;
+		)
+		
+		COLOR(
+			r=.5;
+			g=.5;
+			b=.5;
+		)
+	}
+	
+	BAR{
+		DIMENSIONS(
+			a=2000;
+			b=.01;
+			c=2000;
+		)
+		
+		POSITION(
+			x=0;
+			y=0;
+			z=0;
+		)
+		
+		MATERIAL(
+			diffuseR=.6;
+			diffuseG=.6;
+			diffuseB=.6;
+			specularR=.05;
+			specularG=.05;
+			specularB=.05;
+		)
+	}
+	
+	//Base
+	BAR{
+		DIMENSIONS(
+			a=.45;
+			b=.2;
+			c=4.05;
+		)
+		
+		POSITION(
+			x=0;
+			y=0;
+			z=0;
+		)
+		
+		MATERIAL(
+			diffuseR=.1;
+			diffuseG=.1;
+			diffuseB=.8;
+			transparency=.2;
+		)
+	}
+	
+	//Middle Rows
+	BAR{
+		DIMENSIONS(
+			a=.05;
+			b=.4;
+			c=.05;
+		)
+		
+		POSITION(
+			x=-.1;
+			y=.4;
+			z=3.9;
+		)
+		
+		MATERIAL(
+			diffuseR=.8;
+			diffuseG=.8;
+			diffuseB=.8;
+		)
+	}
+	
+	BAR{
+		DIMENSIONS(
+			a=.05;
+			b=.4;
+			c=.05;
+		)
+		
+		POSITION(
+			x=-.1;
+			y=.4;
+			z=3.75;
+		)
+		
+		MATERIAL(
+			diffuseR=.8;
+			diffuseG=.8;
+			diffuseB=.8;
+		)
+	}
+	
+	BAR{
+		DIMENSIONS(
+			a=.05;
+			b=.4;
+			c=.05;
+		)
+		
+		POSITION(
+			x=-.1;
+			y=.4;
+			z=3.6;
+		)
+		
+		MATERIAL(
+			diffuseR=.8;
+			diffuseG=.8;
+			diffuseB=.8;
+		)
+	}
+	
+	BAR{
+		DIMENSIONS(
+			a=.05;
+			b=.4;
+			c=.05;
+		)
+		
+		POSITION(
+			x=-.1;
+			y=.4;
+			z=3.45;
+		)
+		
+		MATERIAL(
+			diffuseR=.8;
+			diffuseG=.8;
+			diffuseB=.8;
+		)
+	}
+	
+	BAR{
+		DIMENSIONS(
+			a=.05;
+			b=.4;
+			c=.05;
+		)
+		
+		POSITION(
+			x=-.1;
+			y=.4;
+			z=3.30;
+		)
+		
+		MATERIAL(
+			diffuseR=.8;
+			diffuseG=.8;
+			diffuseB=.8;
+		)
+	}
+	
+	BAR{
+		DIMENSIONS(
+			a=.05;
+			b=.4;
+			c=.05;
+		)
+		
+		POSITION(
+			x=-.1;
+			y=.4;
+			z=3.15;
+		)
+		
+		MATERIAL(
+			diffuseR=.8;
+			diffuseG=.8;
+			diffuseB=.8;
+		)
+	}
+	
+	BAR{
+		DIMENSIONS(
+			a=.05;
+			b=.4;
+			c=.05;
+		)
+		
+		POSITION(
+			x=-.1;
+			y=.4;
+			z=3;
+		)
+		
+		MATERIAL(
+			diffuseR=.8;
+			diffuseG=.8;
+			diffuseB=.8;
+		)
+	}
+	
+	//mirror
+	BAR{
+		DIMENSIONS(
+			a=.05;
+			b=.4;
+			c=.05;
+		)
+		
+		POSITION(
+			x=.1;
+			y=.4;
+			z=3.9;
+		)
+		
+		MATERIAL(
+			diffuseR=.8;
+			diffuseG=.8;
+			diffuseB=.8;
+		)
+	}
+	
+	BAR{
+		DIMENSIONS(
+			a=.05;
+			b=.4;
+			c=.05;
+		)
+		
+		POSITION(
+			x=.1;
+			y=.4;
+			z=3.75;
+		)
+		
+		MATERIAL(
+			diffuseR=.8;
+			diffuseG=.8;
+			diffuseB=.8;
+		)
+	}
+	
+	BAR{
+		DIMENSIONS(
+			a=.05;
+			b=.4;
+			c=.05;
+		)
+		
+		POSITION(
+			x=.1;
+			y=.4;
+			z=3.6;
+		)
+		
+		MATERIAL(
+			diffuseR=.8;
+			diffuseG=.8;
+			diffuseB=.8;
+		)
+	}
+	
+	BAR{
+		DIMENSIONS(
+			a=.05;
+			b=.4;
+			c=.05;
+		)
+		
+		POSITION(
+			x=.1;
+			y=.4;
+			z=3.45;
+		)
+		
+		MATERIAL(
+			diffuseR=.8;
+			diffuseG=.8;
+			diffuseB=.8;
+		)
+	}
+	
+	BAR{
+		DIMENSIONS(
+			a=.05;
+			b=.4;
+			c=.05;
+		)
+		
+		POSITION(
+			x=.1;
+			y=.4;
+			z=3.30;
+		)
+		
+		MATERIAL(
+			diffuseR=.8;
+			diffuseG=.8;
+			diffuseB=.8;
+		)
+	}
+	
+	BAR{
+		DIMENSIONS(
+			a=.05;
+			b=.4;
+			c=.05;
+		)
+		
+		POSITION(
+			x=.1;
+			y=.4;
+			z=3.15;
+		)
+		
+		MATERIAL(
+			diffuseR=.8;
+			diffuseG=.8;
+			diffuseB=.8;
+		)
+	}
+	
+	BAR{
+		DIMENSIONS(
+			a=.05;
+			b=.4;
+			c=.05;
+		)
+		
+		POSITION(
+			x=.1;
+			y=.4;
+			z=3;
+		)
+		
+		MATERIAL(
+			diffuseR=.8;
+			diffuseG=.8;
+			diffuseB=.8;
+		)
+	}
+	
+	//Side rows
+	BAR{
+		DIMENSIONS(
+			a=.05;
+			b=.4;
+			c=.05;
+		)
+		
+		POSITION(
+			x=.3;
+			y=.4;
+			z=3.95;
+		)
+		
+		MATERIAL(
+			diffuseR=.8;
+			diffuseG=.8;
+			diffuseB=.8;
+		)
+	}
+	
+	BAR{
+		DIMENSIONS(
+			a=.05;
+			b=.4;
+			c=.05;
+		)
+		
+		POSITION(
+			x=.3;
+			y=.4;
+			z=3.8;
+		)
+		
+		MATERIAL(
+			diffuseR=.8;
+			diffuseG=.8;
+			diffuseB=.8;
+		)
+	}
+	
+	BAR{
+		DIMENSIONS(
+			a=.05;
+			b=.4;
+			c=.05;
+		)
+		
+		POSITION(
+			x=.3;
+			y=.4;
+			z=3.65;
+		)
+		
+		MATERIAL(
+			diffuseR=.8;
+			diffuseG=.8;
+			diffuseB=.8;
+		)
+	}
+	
+	BAR{
+		DIMENSIONS(
+			a=.05;
+			b=.4;
+			c=.05;
+		)
+		
+		POSITION(
+			x=.3;
+			y=.4;
+			z=3.5;
+		)
+		
+		MATERIAL(
+			diffuseR=.8;
+			diffuseG=.8;
+			diffuseB=.8;
+		)
+	}
+	
+	BAR{
+		DIMENSIONS(
+			a=.05;
+			b=.4;
+			c=.05;
+		)
+		
+		POSITION(
+			x=.3;
+			y=.4;
+			z=3.35;
+		)
+		
+		MATERIAL(
+			diffuseR=.8;
+			diffuseG=.8;
+			diffuseB=.8;
+		)
+	}
+	
+	BAR{
+		DIMENSIONS(
+			a=.05;
+			b=.4;
+			c=.05;
+		)
+		
+		POSITION(
+			x=.3;
+			y=.4;
+			z=3.2;
+		)
+		
+		MATERIAL(
+			diffuseR=.8;
+			diffuseG=.8;
+			diffuseB=.8;
+		)
+	}
+	
+	BAR{
+		DIMENSIONS(
+			a=.05;
+			b=.4;
+			c=.05;
+		)
+		
+		POSITION(
+			x=.3;
+			y=.4;
+			z=3.05;
+		)
+		
+		MATERIAL(
+			diffuseR=.8;
+			diffuseG=.8;
+			diffuseB=.8;
+		)
+	}
+	
+	//Mirror
+	BAR{
+		DIMENSIONS(
+			a=.05;
+			b=.4;
+			c=.05;
+		)
+		
+		POSITION(
+			x=-.3;
+			y=.4;
+			z=3.95;
+		)
+		
+		MATERIAL(
+			diffuseR=.8;
+			diffuseG=.8;
+			diffuseB=.8;
+		)
+	}
+	
+	BAR{
+		DIMENSIONS(
+			a=.05;
+			b=.4;
+			c=.05;
+		)
+		
+		POSITION(
+			x=-.3;
+			y=.4;
+			z=3.8;
+		)
+		
+		MATERIAL(
+			diffuseR=.8;
+			diffuseG=.8;
+			diffuseB=.8;
+		)
+	}
+	
+	BAR{
+		DIMENSIONS(
+			a=.05;
+			b=.4;
+			c=.05;
+		)
+		
+		POSITION(
+			x=-.3;
+			y=.4;
+			z=3.65;
+		)
+		
+		MATERIAL(
+			diffuseR=.8;
+			diffuseG=.8;
+			diffuseB=.8;
+		)
+	}
+	
+	BAR{
+		DIMENSIONS(
+			a=.05;
+			b=.4;
+			c=.05;
+		)
+		
+		POSITION(
+			x=-.3;
+			y=.4;
+			z=3.5;
+		)
+		
+		MATERIAL(
+			diffuseR=.8;
+			diffuseG=.8;
+			diffuseB=.8;
+		)
+	}
+	
+	BAR{
+		DIMENSIONS(
+			a=.05;
+			b=.4;
+			c=.05;
+		)
+		
+		POSITION(
+			x=-.3;
+			y=.4;
+			z=3.35;
+		)
+		
+		MATERIAL(
+			diffuseR=.8;
+			diffuseG=.8;
+			diffuseB=.8;
+		)
+	}
+	
+	BAR{
+		DIMENSIONS(
+			a=.05;
+			b=.4;
+			c=.05;
+		)
+		
+		POSITION(
+			x=-.3;
+			y=.4;
+			z=3.2;
+		)
+		
+		MATERIAL(
+			diffuseR=.8;
+			diffuseG=.8;
+			diffuseB=.8;
+		)
+	}
+	
+	BAR{
+		DIMENSIONS(
+			a=.05;
+			b=.4;
+			c=.05;
+		)
+		
+		POSITION(
+			x=-.3;
+			y=.4;
+			z=3.05;
+		)
+		
+		MATERIAL(
+			diffuseR=.8;
+			diffuseG=.8;
+			diffuseB=.8;
+		)
+	}
+]

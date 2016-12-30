@@ -1,0 +1,129 @@
+OBJECTS[
+	CAMERA{
+		POSITION(
+			x=10;
+			y=5;
+			z=0;
+		)
+		
+		LOOKAT(
+			x=0;
+			y=5;
+			z=0;
+		)
+		
+		UP(
+			x=0;
+			y=1;
+			z=0;
+		)
+	}
+	
+	LIGHT{
+		POSITION(
+			x=0;
+			y=10;
+			z=0;
+		)
+		
+		COLOR(
+			r=.8;
+			g=.8;
+			b=0.8;
+		)
+	}
+	
+	BAR{
+		DIMENSIONS(
+			a=200;
+			b=.1;
+			c=200;
+		)
+		
+		POSITION(
+			x=0;
+			y=0;
+			z=0;
+		)
+		
+		MATERIAL(
+			texture=1;
+			emissiveB=.8;
+			emissiveG=.8;
+			emissiveR=.8;
+		)
+	}
+	
+	SPHERE{
+		DIMENSIONS(
+			a=2;
+			b=2;
+			c=2;
+		)
+		
+		POSITION(
+			x=0;
+			y=2;
+			z=-4;
+		)
+		
+		MATERIAL(
+			MIRROR;
+		)
+	}
+	
+	SPHERE{
+		DIMENSIONS(
+			a=2;
+			b=2;
+			c=2;
+		)
+		
+		POSITION(
+			x=0;
+			y=2;
+			z=4;
+		)
+		
+		MATERIAL(
+			GLASS;
+		)
+	}
+	
+	BOOL<
+		MULTIPLY:
+		SPHERE{
+			DIMENSIONS(
+				a=1;
+				b=4;
+				c=4;
+			)
+			
+			POSITION(
+				x=8.1;
+				y=5;
+				z=0;
+			)
+			
+			MATERIAL(
+				GLASS;
+			)
+		}
+		SPHERE{
+			DIMENSIONS(
+				a=1;
+				b=4;
+				c=4;
+			)
+			
+			POSITION(
+				x=9.9;
+				y=5;
+				z=0;
+			)
+			
+			MATERIAL(
+				GLASS;
+			)
+		}
+]

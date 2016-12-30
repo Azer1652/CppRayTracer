@@ -1,0 +1,195 @@
+OBJECTS[
+	CAMERA{
+		POSITION(
+			x=5;
+			y=2;
+			z=0;
+		)
+		
+		LOOKAT(
+			x=0;
+			y=2;
+			z=0;
+		)
+		
+		UP(
+			x=0;
+			y=1;
+			z=0;
+		)
+	}
+	
+	LIGHT{
+		POSITION(
+			x=0;
+			y=5;
+			z=0;
+		)
+		
+		COLOR(
+			r=1;
+			g=1;
+			b=1;
+		)
+	}
+	
+
+	BAR{
+		DIMENSIONS(
+			a=.2;
+			b=1;
+			c=1.25;
+		)
+		
+		POSITION(
+			x=0;
+			y=7;
+			z=0;
+		)
+		
+		MATERIAL(
+			WALL;
+			diffuseB=1;
+			diffuseR=1;
+			diffuseG=1;
+		)
+	}
+	
+	BAR{
+		DIMENSIONS(
+			a=10;
+			b=.1;
+			c=10;
+		)
+		
+		POSITION(
+			x=0;
+			y=0;
+			z=0;
+		)
+		
+		MATERIAL(
+			WALL;
+			diffuseB=0.8;
+			diffuseR=.8;
+			diffuseG=.8;
+		)
+	}
+	
+	BAR{
+		DIMENSIONS(
+			a=.1;
+			b=5;
+			c=5;
+		)
+		
+		POSITION(
+			x=-3;
+			y=2.5;
+			z=0;
+		)
+		
+		MATERIAL(
+			WALL;
+			diffuseB=0.8;
+			diffuseR=.8;
+			diffuseG=.8;
+		)
+	}
+	
+	BAR{
+		DIMENSIONS(
+			a=6;
+			b=5;
+			c=.1;
+		)
+		
+		POSITION(
+			x=2.5;
+			y=2.5;
+			z=4;
+		)
+		
+		MATERIAL(
+			WALL;
+			diffuseB=0.3;
+			diffuseR=.9;
+			diffuseG=.1;
+		)
+	}
+
+	BAR{
+		DIMENSIONS(
+			a=6;
+			b=5;
+			c=.1;
+		)
+		
+		POSITION(
+			x=2.5;
+			y=2.5;
+			z=-4;
+		)
+		
+		MATERIAL(
+			WALL;
+			diffuseB=.9;
+			diffuseR=.3;
+			diffuseG=.1;
+		)
+	}
+
+	//ACTUAL SPHERES
+	CONE{
+		DIMENSIONS(
+			a=1;
+			b=1;
+			c=1;
+		)
+		
+		ROTATION(
+			a=90;
+			b=0;
+			c=0;
+		)
+		
+		POSITION(
+			x=-.5;
+			y=1;
+			z=2;
+		)
+		
+		MATERIAL(
+			diffuseG=.8;
+			diffuseB=.8;
+			diffuseR=.8;
+		)
+	}
+	
+	BAR{
+		DIMENSIONS(
+			a=1;
+			b=1;
+			c=1;
+		)
+		
+		ROTATION(
+			a=0;
+			b=0;
+			c=0;
+		)
+		
+		POSITION(
+			x=0;
+			y=1;
+			z=-1.5;
+		)
+		
+		MATERIAL(
+			WALL;
+			diffuseB=.5;
+			diffuseR=.5;
+			diffuseG=.5;
+		)
+	}
+	
