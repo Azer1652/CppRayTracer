@@ -46,6 +46,7 @@ private:
 
 	void analyseProblem(std::vector<Hit*>*);
 	void selectHits(std::vector<Hit*>*, std::vector<Hit*>*);
+	void substractCalc(std::vector<Hit*>*, std::vector<Hit*>*);
 };
 
 #endif /* BOOLOBJ_H_ */

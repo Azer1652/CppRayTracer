@@ -39,7 +39,7 @@ public:
 	double* getCamU();
 	double* getCamV();
 
-	int numThreads = 8;
+	int numThreads = 4;
 private:
 
 	Scene* scene;

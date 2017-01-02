@@ -10,8 +10,6 @@
 #include <GL/Glu.h>
 #include <GL/glut.h>  // GLUT, includes glu.h and gl.h
 
-#include <ctime>
-
 #include "../hdr/Tracer.h"
 #include "../hdr/scene/Scene.h"
 #include "../hdr/matrices/TransformMatrix.h"
@@ -128,7 +126,7 @@ int main(int argc, char** argv) {
 	//RayTracer* tracer = new RayTracer("./files/MirrorBoxScene.sdl", 8, 1);
 	//RayTracer* tracer = new RayTracer("./files/GlassSphereScene.sdl", 4, 1);
 	//RayTracer* tracer = new RayTracer("./files/RefractionScene.sdl", 4, 1);
-	RayTracer* tracer = new RayTracer("./files/RefractionTestScene.sdl", 4, 1);
+	//RayTracer* tracer = new RayTracer("./files/RefractionTestScene.sdl", 4, 1);
 	//RayTracer* tracer = new RayTracer("./files/ToothbrushScene.sdl", 4, 1);
 	//RayTracer* tracer = new RayTracer("./files/SphereScene.sdl", 4, 1);
 	//RayTracer* tracer = new RayTracer("./files/BoxScene.sdl");
@@ -137,6 +135,7 @@ int main(int argc, char** argv) {
 	//RayTracer* tracer = new RayTracer("./files/BoolObjTest.sdl", 4, 1);
 	//RayTracer* tracer = new RayTracer("./files/BoolObjCubeTest.sdl", 4, 1);
 	//RayTracer* tracer = new RayTracer("./files/ComplexBoolObjTest.sdl", 4, 1);
+	RayTracer* tracer = new RayTracer("./files/BallInCubeBool.sdl", 4, 1);
 
 	delete tracer;
 	return 0;

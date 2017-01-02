@@ -14,6 +14,9 @@
 #include "../hdr/scene/Camera.h"
 #include "../hdr/matrices/ViewMatrix.h"
 
+#include <ctime>
+#include <iostream>
+
 /*
 Tracer::Tracer() {
 	// TODO Auto-generated constructor stub
@@ -33,13 +36,16 @@ Tracer::~Tracer(){
 }
 
 void Tracer::start(int recursion, int blockSize, bool shadows, ViewMatrix* matrix){
-	/*
+	//start timer
+	clock_t begin = clock();
+
+
 	//Singlethreaded approach for simplification
 	mans.push_back(new RayManager(this, recursion, blockSize, shadows, matrix));
 	mans[0]->run();
-	*/
 
 
+	/*
 	//8 threads
 	int div = 0;
 	int div2 = divisions;
@@ -61,6 +67,11 @@ void Tracer::start(int recursion, int blockSize, bool shadows, ViewMatrix* matri
 	for(RayManager* man : mans)
 		delete man;
 	mans.clear();
+	*/
+
+	clock_t end = clock();
+	double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
+	cout << "Elapsed time: " << elapsed_secs << " sec." << endl;
 }
 
 Scene* Tracer::getScene(){

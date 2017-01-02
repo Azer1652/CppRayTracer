@@ -18,6 +18,7 @@
 #include "../hdr/scene/materials/Material.h"
 
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
@@ -82,34 +83,21 @@ void Ray::run(double* result) {
 }
 
 Hit* Ray::traceObjects(){
-	Hit* bestHit = new Hit();
+	Hit* bestHit = NULL;
 	for(GeoObj* obj : *(tracer->getScene()->getObjects())){
 		vector<Hit*> hitData;
-		try{
-			//if(obj->type == BOOLOBJ)
-				obj->hit(this, &hitData);
-		}catch (exception& e)
-		{
-			const char* what = e.what();
-			int i = 16;
-			vector<Hit*> hitData2;
-			obj->hit(this, &hitData2);
-			i++;
-		}
-		for(Hit* hit : hitData){
-			if(bestHit->getObj() == NULL){
-				delete bestHit;
-				bestHit = new Hit(hit);
-			}else{
-				if (hit->getTime() < bestHit->getTime()){
-					delete bestHit;
-					bestHit = new Hit(hit);
-				}
+		obj->hit(this, &hitData);
+
+		if(!hitData.empty()){
+			//SORT VECTOR
+			std::sort(hitData.begin(), hitData.end(),
+					[](const Hit* lhs, const Hit* rhs) {return lhs->time < rhs->time;});
+
+			bestHit = new Hit(hitData.front());
+			//TODO FIX CLEAR MEMORY LEAK;
+			for(Hit* hit: hitData){
+				delete hit;
 			}
-		}
-		//TODO FIX CLEAR MEMORY LEAK;
-		for(Hit* hit: hitData){
-			delete hit;
 		}
 	}
 	return bestHit;
@@ -127,7 +115,7 @@ bool Ray::isInShadow(Ray* feeler){
 }
 
 double* Ray::setResult(Hit* a){
-	if(a->getObj() != NULL){
+	if(a != NULL){
 		//System.out.println("Object hit");
 		calculate(a);
 	}

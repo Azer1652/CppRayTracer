@@ -100,13 +100,13 @@ OBJECTS[
 			)
 			
 			POSITION(
-				x=8.1;
+				x=7.1;
 				y=5;
 				z=0;
 			)
 			
 			MATERIAL(
-				GLASS;
+				MIRROR;
 			)
 		}
 		SPHERE{
@@ -117,13 +117,13 @@ OBJECTS[
 			)
 			
 			POSITION(
-				x=9.9;
+				x=8.9;
 				y=5;
 				z=0;
 			)
 			
 			MATERIAL(
-				GLASS;
+				MIRROR;
 			)
 		}
 ]

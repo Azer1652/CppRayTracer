@@ -36,90 +36,42 @@ void BoolObj::hit(Ray* r, vector<Hit*>* hitData) {
 	analyseProblem(&hits);
 	selectHits(&hits, hitData);
 
+	//this->setMat(hits.front()->getObj()->getMaterial());
+
 	for (Hit* hit : hits) {
 		delete hit;
 	}
 }
 
 bool BoolObj::hitShadow(Ray* r) {
-	/*if(this->operation == ADD){
-		if(objects[0]->hitShadow(r) ||	objects[1]->hitShadow(r)){
-			return true;
+
+	vector<Hit*> hits;
+	vector<Hit*> hitData;
+	objects[0]->hit(r, &hits);
+	objects[1]->hit(r, &hits);
+	if(hits.empty()){
+		return false;
+	}
+	analyseProblem(&hits);
+	selectHits(&hits, &hitData);
+
+	bool shadow = false;
+
+	for(Hit* hit : hitData){
+		if(hit->getTime() > 1 || hit->getTime() < 0){
+			//do nothing, hit out of reach
+		}else{
+			shadow = true;
 		}
-	}else{
-		vector<Hit*> hits;
-		objects[0]->hit(r, &hits);
-		objects[1]->hit(r, &hits);
-		if(hits.empty()){
-			return false;
-		}
-		analyseProblem(&hits);
-		vector<Hit*> hitData;
-		selectHits(&hits, &hitData);
-		for(Hit* hit : hitData){
-			if(hit->getObj() == objects.at(0)){
-				for (Hit* hit : hits) {
-					delete hit;
-				}
-				for (Hit* hit : hitData) {
-					delete hit;
-				}
-				return true;
-			}
-		}
-	}*/
-	return false;
+	}
+	return shadow;
+
 }
 
 void BoolObj::analyseProblem(vector<Hit*>* hits) {
 	//SORT VECTOR
 	std::sort(hits->begin(), hits->end(),
 			[](const Hit* lhs, const Hit* rhs) {return lhs->time < rhs->time;});
-
-	bool logical = true;
-	int i = 0;
-	for (Hit* hit : *hits) {
-		switch (i % 2) {
-		case 0:
-			if (!hit->getEntering()) {
-				logical = false;
-			}
-			i++;
-			break;
-		case 1:
-			if (hit->getEntering()) {
-				logical = false;
-			}
-			i++;
-			break;
-		}
-	}
-
-	if (!logical) {
-		if(hits->size() == 1){
-			if(hits->at(0)->getObj() == objects.at(0))
-				problemType = FIRST_OUT;
-			else
-				problemType = SECOND_OUT;
-		}else if(hits->size() == 2){
-			if(hits->at(0)->getObj() == objects.at(0))
-				problemType = BOTH_FIRST;
-			else
-				problemType = BOTH_SECOND;
-		}if(hits->size() == 3){
-			if(hits->at(0)->getObj() == objects.at(0))
-				problemType = SECOND_IN;
-			else
-				problemType = FIRST_IN;
-		}if(hits->size() == 4){
-			if(hits->at(0)->getObj() == objects.at(0))
-				problemType = OUT_FIRST;
-			else
-				problemType = OUT_SECOND;
-		}
-	} else {
-		problemType = NO_OP;
-	}
 }
 
 void BoolObj::selectHits(vector<Hit*>* hits, std::vector<Hit*>* hitData) {
@@ -148,39 +100,7 @@ void BoolObj::selectHits(vector<Hit*>* hits, std::vector<Hit*>* hitData) {
 		}
 		break;
 	case SUBSTRACT:
-		switch (this->problemType) {
-		case OUT_FIRST:
-			hitData->push_back(new Hit(hits->front()));
-			hitData->push_back(new Hit(hits->at(1)));
-			break;
-		case FIRST_OUT:
-		case FIRST_IN:
-			hitData->push_back(new Hit(hits->front()));
-			break;
-		case BOTH_FIRST:
-			hitData->push_back(new Hit(hits->front()));
-			hitData->push_back(new Hit(hits->at(1)));
-			break;
-		case BOTH_SECOND:
-		case SECOND_OUT:
-			//none
-			break;
-		case SECOND_IN:
-			hitData->push_back(new Hit(hits->at(1)));
-			hitData->push_back(new Hit(hits->back()));
-			break;
-		case OUT_SECOND:
-			hitData->push_back(new Hit(hits->at(2)));
-			hitData->push_back(new Hit(hits->back()));
-			break;
-		case NO_OP:
-			//ADD ALL IF OBJ 1 HIT
-			for (Hit* hit : *hits) {
-				if(hit->obj == objects.at(0) && hit->getEntering() == true)
-					hitData->push_back(new Hit(hit));
-			}
-			break;
-		}
+		substractCalc(hits, hitData);
 		break;
 	case MULTIPLY:
 		switch (this->problemType) {
@@ -209,5 +129,45 @@ void BoolObj::selectHits(vector<Hit*>* hits, std::vector<Hit*>* hitData) {
 			break;
 		}
 		break;
+	}
+}
+
+void BoolObj::substractCalc(std::vector<Hit*>* hits, std::vector<Hit*>* hitData){
+	if(hits->size() == 1){
+		if(hits->front()->obj == objects[0] && !hits->front()->getEntering())
+			hitData->push_back(new Hit(hits->front()));
+		if(hits->front()->obj == objects[1] && hits->front()->getEntering())
+			hitData->push_back(new Hit(hits->front()));
+		return;
+	}else{
+		Hit* prev = NULL;
+		for(Hit* curr : *hits){
+			if(prev == NULL){
+				prev = curr;
+				continue;
+			}
+			//first obj enter followed by first object exit == logical
+			if(prev->getObj() == objects[0] && prev->getEntering() && curr->getObj() == objects[0] && !curr->getEntering()){
+				hitData->push_back(new Hit(prev));
+				hitData->push_back(new Hit(curr));
+			}
+
+			//first obj In followed by Second obj In
+			if(prev->getObj() == objects[0] && prev->getEntering() && curr->getObj() == objects[1] && curr->getEntering()){
+				hitData->push_back(new Hit(prev));
+				hitData->push_back(new Hit(curr));
+			}
+
+			//second obj out followed by first obj out
+			if(prev->getObj() == objects[1] && !prev->getEntering() && curr->getObj() == objects[0] && !curr->getEntering()){
+				hitData->push_back(new Hit(prev));
+				double* normal = hitData->back()->getNormal();
+				normal[0] = -normal[0];
+				normal[1] = -normal[1];
+				normal[2] = -normal[2];
+				hitData->push_back(new Hit(curr));
+			}
+			prev = curr;
+		}
 	}
 }
