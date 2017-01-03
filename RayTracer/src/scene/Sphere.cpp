@@ -63,13 +63,18 @@ void Sphere::hit(Ray* r, vector<Hit*>* hitData){
 										r->getLocation()[2]+r->getDirection()[2]*t2});
 			hit->setTime(t2);
 			hit->setObj(this);
-			if(t2<t1 && t1 >0)
+			if(t2<t1 && t1 >0){
 				hit->setEntering(true);
-			else
+				hit->setNormal(new double[3]{ray->getLocation()[0]+ray->getDirection()[0]*t2,
+										ray->getLocation()[1]+ray->getDirection()[1]*t2,
+										ray->getLocation()[2]+ray->getDirection()[2]*t2});
+			}else{
 				hit->setEntering(false);
-			hit->setNormal(new double[3]{ray->getLocation()[0]+ray->getDirection()[0]*t2,
-						ray->getLocation()[1]+ray->getDirection()[1]*t2,
-						ray->getLocation()[2]+ray->getDirection()[2]*t2});
+				hit->setNormal(new double[3]{ray->getLocation()[0]-ray->getDirection()[0]*t2,
+										ray->getLocation()[1]-ray->getDirection()[1]*t2,
+										ray->getLocation()[2]-ray->getDirection()[2]*t2});
+			}
+
 			//System.out.println("normal: " + hit.getNormal()[0] + " " + hit.getNormal()[1] + " " + hit.getNormal()[2]);
 			//extra hitData
 			hitData->push_back(hit);
@@ -82,13 +87,19 @@ void Sphere::hit(Ray* r, vector<Hit*>* hitData){
 							r->getLocation()[2]+r->getDirection()[2]*t1});
 			hit->setTime(t1);
 			hit->setObj(this);
-			if(t1<t2 && t2 >0)
+			if(t1<t2 && t2 >0){
 				hit->setEntering(true);
-			else
+				hit->setNormal(new double[3]{ray->getLocation()[0]+ray->getDirection()[0]*t1,
+											ray->getLocation()[1]+ray->getDirection()[1]*t1,
+											ray->getLocation()[2]+ray->getDirection()[2]*t1});
+			}
+			else{
 				hit->setEntering(false);
-			hit->setNormal(new double[3]{ray->getLocation()[0]+ray->getDirection()[0]*t1,
-						ray->getLocation()[1]+ray->getDirection()[1]*t1,
-						ray->getLocation()[2]+ray->getDirection()[2]*t1});
+				hit->setNormal(new double[3]{ray->getLocation()[0]-ray->getDirection()[0]*t1,
+											ray->getLocation()[1]-ray->getDirection()[1]*t1,
+											ray->getLocation()[2]-ray->getDirection()[2]*t1});
+			}
+
 			//System.out.println("normal: " + hit.getNormal()[0] + " " + hit.getNormal()[1] + " " + hit.getNormal()[2]);
 			//extra hitData
 			hitData->push_back(hit);

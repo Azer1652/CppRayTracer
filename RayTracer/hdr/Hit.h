@@ -27,6 +27,8 @@ public:
 	void setNormal(double*);
 	double* getNormal();
 
+	void flipNormal();
+
 	void setPosition(double*);
 	double* getPosition();
 

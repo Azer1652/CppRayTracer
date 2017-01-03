@@ -92,9 +92,13 @@ Hit* Ray::traceObjects(){
 			//SORT VECTOR
 			std::sort(hitData.begin(), hitData.end(),
 					[](const Hit* lhs, const Hit* rhs) {return lhs->time < rhs->time;});
+			if(bestHit == NULL)
+				bestHit = new Hit(hitData.front());
+			else if(hitData.front()->getTime() < bestHit->getTime()){
+					delete bestHit;
+				bestHit = new Hit(hitData.front());
+			}
 
-			bestHit = new Hit(hitData.front());
-			//TODO FIX CLEAR MEMORY LEAK;
 			for(Hit* hit: hitData){
 				delete hit;
 			}

@@ -67,7 +67,7 @@ void RayManager::run(){
 	}
 	while(i<div2){
 		while(j<HEIGHT){
-			if(i == 450 && j == 350)
+			if(i == 300 && j == 300)
 				std::cout << "Break;" << std::endl;
 			double x = -tracer->getCamW() + (i) * blockWidth;
 			double y = -tracer->getCamH() + (j) * blockHeight;

@@ -1,9 +1,9 @@
 OBJECTS[
 	CAMERA{
 		POSITION(
-			x=3;
-			y=3.5;
-			z=3;
+			x=2;
+			y=3;
+			z=0;
 		)
 		
 		LOOKAT(
@@ -31,81 +31,123 @@ OBJECTS[
 			b=.8;
 		)
 	}
-	
-	B/AR{
+	BOOL<
+		ADD:
+		BOOL<
+			SUBSTRACT:
+			BOOL<
+				SUBSTRACT:
+				BOOL<
+					SUBSTRACT:
+					BAR{
+						POSITION(
+							x=0;
+							y=0;
+							z=0;
+						)
+						DIMENSIONS(
+							a=1;
+							b=1;
+							c=1;
+						)
+						MATERIAL(
+							WALL;
+							diffuseB=.0;
+							diffuseR=.0;
+							diffuseG=.8;
+						)
+					}
+					BAR{
+						POSITION(
+							x=0;
+							y=0;
+							z=0;
+						)
+						DIMENSIONS(
+							a=2;
+							b=0.8;
+							c=0.8;
+						)
+						MATERIAL(
+							WALL;
+							diffuseB=.8;
+							diffuseR=.0;
+							diffuseG=.0;
+						)
+					}
+				>
+				BAR{
+					POSITION(
+						x=0;
+						y=0;
+						z=0;
+					)
+					DIMENSIONS(
+						a=0.8;
+						b=0.8;
+						c=2;
+					)
+					MATERIAL(
+						WALL;
+						diffuseB=.0;
+						diffuseR=.8;
+						diffuseG=.0;
+					)
+				}
+			>
+			BAR{
+				POSITION(
+					x=0;
+					y=0;
+					z=0;
+				)
+				DIMENSIONS(
+					a=0.8;
+					b=2;
+					c=0.8;
+				)
+				MATERIAL(
+					WALL;
+					diffuseB=.8;
+					diffuseR=.0;
+					diffuseG=.8;
+				)
+			}
+		>
+		SPHERE{
+			POSITION(
+				x=0;
+				y=0.3;
+				z=0;
+			)
+			DIMENSIONS(
+				a=0.8;
+				b=0.8;
+				c=0.8;
+			)
+			MATERIAL(
+				WALL;
+				diffuseB=.0;
+				diffuseR=.8;
+				diffuseG=.8;
+			)
+		}
+	>
+	BAR{
 			POSITION(
 				x=0;
 				y=-2;
 				z=0;
 			)
 			DIMENSIONS(
-				a=10000000;
-				b=.1;
-				c=10000000;
+				a=100000000;
+				b=0.1;
+				c=100000000;
 			)
 			MATERIAL(
 				WALL;
-				diffuseB=.0;
-				emissiveR=.8;
-				diffuseG=.0;
+				diffuseB=.5;
+				diffuseR=.5;
+				diffuseG=.5;
 			)
 		}
-	
-	BOOL<
-		SUBSTRACT:
-		BAR{
-			POSITION(
-				x=0;
-				y=0;
-				z=0;
-			)
-			DIMENSIONS(
-				a=1;
-				b=1;
-				c=1;
-			)
-			MATERIAL(
-				WALL;
-				diffuseB=.0;
-				diffuseR=.0;
-				diffuseG=.8;
-			)
-		}
-		BAR{
-			POSITION(
-				x=0;
-				y=0;
-				z=0;
-			)
-			DIMENSIONS(
-				a=2;
-				b=0.8;
-				c=0.8;
-			)
-			MATERIAL(
-				WALL;
-				diffuseB=.8;
-				specularB=0.8;
-				diffuseR=.0;
-				diffuseG=.0;
-			)
-		}
-	
-	S/PHERE{
-		POSITION(
-			x=0;
-			y=0;
-			z=0;
-		)
-		DIMENSIONS(
-			a=1;
-			b=1;
-			c=1;
-		)
-		MATERIAL(
-			WALL;
-			diffuseB=.0;
-			diffuseR=.8;
-			diffuseG=.0;
-		)
-	}

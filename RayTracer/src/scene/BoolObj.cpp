@@ -36,11 +36,13 @@ void BoolObj::hit(Ray* r, vector<Hit*>* hitData) {
 	analyseProblem(&hits);
 	selectHits(&hits, hitData);
 
-	//this->setMat(hits.front()->getObj()->getMaterial());
-
 	for (Hit* hit : hits) {
 		delete hit;
 	}
+}
+
+vector<GeoObj*>* BoolObj::getObjects(){
+	return &objects;
 }
 
 bool BoolObj::hitShadow(Ray* r) {
@@ -132,6 +134,15 @@ void BoolObj::selectHits(vector<Hit*>* hits, std::vector<Hit*>* hitData) {
 	}
 }
 
+void BoolObj::addCalc(std::vector<Hit*>* hits, std::vector<Hit*>* hitData){
+	if(hits->size() == 1){
+		hitData->push_back(new Hit(hits->front()));
+	}else{
+		hitData->push_back(new Hit(hits->front()));
+		hitData->push_back(new Hit(hits->back()));
+	}
+}
+
 void BoolObj::substractCalc(std::vector<Hit*>* hits, std::vector<Hit*>* hitData){
 	if(hits->size() == 1){
 		if(hits->front()->obj == objects[0] && !hits->front()->getEntering())
@@ -140,34 +151,124 @@ void BoolObj::substractCalc(std::vector<Hit*>* hits, std::vector<Hit*>* hitData)
 			hitData->push_back(new Hit(hits->front()));
 		return;
 	}else{
+		bool encapsulated = false;
 		Hit* prev = NULL;
+		//Analyze all hits
+		//Delete duplicates
+		Hit* curr = NULL;
+		for(vector<Hit*>::iterator it = hits->begin(); it!=hits->end();){
+			curr = (*it);
+			if(prev == NULL){
+				prev = curr;
+				it++;
+				continue;
+			}
+			if(abs(prev->getTime()-curr->getTime())<0.00000001){
+				if(compareObjectsComplex(curr->getObj(), this)){
+					it = hits->erase(it-1);
+					it++;
+				}else{
+					it = hits->erase(it);
+				}
+
+			}else{
+				prev = curr;
+				it++;
+			}
+		}
+
+		//Look for patterns
+		vector<Hit*> hitBuffer;
+		prev = NULL;
 		for(Hit* curr : *hits){
 			if(prev == NULL){
 				prev = curr;
 				continue;
 			}
-			//first obj enter followed by first object exit == logical
-			if(prev->getObj() == objects[0] && prev->getEntering() && curr->getObj() == objects[0] && !curr->getEntering()){
-				hitData->push_back(new Hit(prev));
-				hitData->push_back(new Hit(curr));
+
+			if(compareObjectsComplex(prev->getObj(), objects[1]) && prev->getEntering()){
+				encapsulated = true;
 			}
 
-			//first obj In followed by Second obj In
-			if(prev->getObj() == objects[0] && prev->getEntering() && curr->getObj() == objects[1] && curr->getEntering()){
-				hitData->push_back(new Hit(prev));
-				hitData->push_back(new Hit(curr));
+			if(compareObjectsComplex(prev->getObj(), objects[1]) && !prev->getEntering()){
+				encapsulated = false;
 			}
 
-			//second obj out followed by first obj out
-			if(prev->getObj() == objects[1] && !prev->getEntering() && curr->getObj() == objects[0] && !curr->getEntering()){
-				hitData->push_back(new Hit(prev));
-				double* normal = hitData->back()->getNormal();
-				normal[0] = -normal[0];
-				normal[1] = -normal[1];
-				normal[2] = -normal[2];
-				hitData->push_back(new Hit(curr));
+			if(!encapsulated){
+				//first obj enter followed by first object exit == logical
+				if(compareObjectsComplex(prev->getObj(), objects[0]) && prev->getEntering() && compareObjectsComplex(curr->getObj(), objects[0]) && !curr->getEntering()){
+					hitBuffer.push_back(new Hit(prev));
+					hitBuffer.push_back(new Hit(curr));
+				}
+
+				//first obj In followed by Second obj In
+				if(compareObjectsComplex(prev->getObj(), objects[0]) && prev->getEntering() && compareObjectsComplex(curr->getObj(), objects[1]) && curr->getEntering()){
+					hitBuffer.push_back(new Hit(prev));
+					Hit* newHit = new Hit(curr);
+					newHit->setEntering(false);
+					//newHit->flipNormal();
+					hitBuffer.push_back(newHit);
+				}
+
+				//second obj out followed by first obj out
+				if(compareObjectsComplex(prev->getObj(), objects[1]) && !prev->getEntering() && compareObjectsComplex(curr->getObj(), objects[0]) && !curr->getEntering()){
+					Hit* prevHit = new Hit(prev);
+					prevHit->setEntering(true);
+					//prevHit->flipNormal();
+					hitData->push_back(prevHit);
+					hitData->push_back(new Hit(curr));
+				}
+
+				//if second object found exiting without exit, all previous hits are invalidated
+				if(compareObjectsComplex(curr->getObj(), objects[1]) && !curr->getEntering()){
+					for(Hit* hit : hitBuffer)
+						delete hit;
+					hitBuffer.clear();
+				}
+
+				//previous ones were really not encapsulated by second object -> add them
+				if(compareObjectsComplex(curr->getObj(), objects[1]) && curr->getEntering()){
+					for(Hit* hit : hitBuffer)
+						hitData->push_back(hit);
+					hitBuffer.clear();
+				}
 			}
+
+
 			prev = curr;
 		}
+		if(!hitBuffer.empty()){
+			for(Hit* hit : hitBuffer)
+				hitData->push_back(hit);
+			hitBuffer.clear();
+		}
 	}
+}
+
+bool BoolObj::compareObjectsComplex(GeoObj* first, GeoObj* second){
+	if(first->type == BOOLOBJ){
+		if(second->type == BOOLOBJ){
+			BoolObj* obj = (BoolObj*)first;
+			BoolObj* obj2 = (BoolObj*)second;
+			if(compareObjectsComplex(obj->getObjects()->at(0) ,obj2->getObjects()->at(0)) ||
+					compareObjectsComplex(obj->getObjects()->at(1), obj2->getObjects()->at(0)) ||
+					compareObjectsComplex(obj->getObjects()->at(0), obj2->getObjects()->at(1)) ||
+					compareObjectsComplex(obj->getObjects()->at(1), obj2->getObjects()->at(1)))
+				return true;
+		}else{
+			BoolObj* obj = (BoolObj*)first;
+			if(compareObjectsComplex(obj->getObjects()->at(0), second) || compareObjectsComplex(obj->getObjects()->at(1), second))
+				return true;
+		}
+	}else{
+		if(second->type == BOOLOBJ){
+			BoolObj* obj2 = (BoolObj*)second;
+			if(compareObjectsComplex(obj2->getObjects()->at(0), first) || compareObjectsComplex(obj2->getObjects()->at(1), first))
+				return true;
+		}else{
+			if(first == second)
+				return true;
+		}
+	}
+	return false;
 }

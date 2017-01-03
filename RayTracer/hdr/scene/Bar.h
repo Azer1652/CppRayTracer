@@ -24,7 +24,7 @@ public:
 	bool hitShadow(Ray*);
 
 private:
-	double* getNormal(int);
+	double* getNormal(int, bool);
 
 };
 

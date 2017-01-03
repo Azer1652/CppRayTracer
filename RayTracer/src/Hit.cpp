@@ -49,6 +49,12 @@ void Hit::setNormal(double* normal) {
 	this->normal = normal;
 }
 
+void Hit::flipNormal(){
+	this->normal[0] = -normal[0];
+	this->normal[1] = -normal[1];
+	this->normal[2] = -normal[2];
+}
+
 double* Hit::getPosition(){
 	return position;
 }

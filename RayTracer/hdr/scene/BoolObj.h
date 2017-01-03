@@ -40,13 +40,19 @@ public:
 	int problemType;
 
 	bool compare(const Hit&, const Hit&);
+
+	std::vector<GeoObj*>* getObjects();
 private:
 	std::vector<GeoObj*> objects;
 	int operation;
 
 	void analyseProblem(std::vector<Hit*>*);
 	void selectHits(std::vector<Hit*>*, std::vector<Hit*>*);
+
+	void addCalc(std::vector<Hit*>*, std::vector<Hit*>*);
 	void substractCalc(std::vector<Hit*>*, std::vector<Hit*>*);
+
+	bool compareObjectsComplex(GeoObj*, GeoObj*);
 };
 
 #endif /* BOOLOBJ_H_ */

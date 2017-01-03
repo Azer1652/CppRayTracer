@@ -96,7 +96,7 @@ void Bar::hit(Ray* r, vector<Hit*>* hitData){
 		hit->setTime(tIn);
 		hit->setObj(this);
 		hit->setEntering(true);
-		hit->setNormal(getNormal(inSurf));
+		hit->setNormal(getNormal(inSurf, true));
 		hitData->push_back(hit);
 	}
 	if(tOut > 0.000001){
@@ -108,7 +108,7 @@ void Bar::hit(Ray* r, vector<Hit*>* hitData){
 		hit->setTime(tOut);
 		hit->setObj(this);
 		hit->setEntering(false);
-		hit->setNormal(getNormal(outSurf));
+		hit->setNormal(getNormal(outSurf, false));
 		hitData->push_back(hit);
 	}
 	delete ray;
@@ -196,26 +196,50 @@ bool Bar::hitShadow(Ray* r){
 	return false;
 }
 
-double* Bar::getNormal(int surface){
-	switch(surface)
-	{
-		case 0:{
-			return new double[3]{0,1,0};
+double* Bar::getNormal(int surface, bool entering){
+	if(entering){
+		switch(surface)
+		{
+			case 0:{
+				return new double[3]{0,1,0};
+			}
+			case 1:{
+				return new double[3]{0,-1,0};
+			}
+			case 2:{
+				return new double[3]{1,0,0};
+			}
+			case 3:{
+				return new double[3]{-1,0,0};
+			}
+			case 4:{
+				return new double[3]{0,0,1};
+			}
+			case 5:{
+				return new double[3]{0,0,-1};
+			}
 		}
-		case 1:{
-			return new double[3]{0,-1,0};
-		}
-		case 2:{
-			return new double[3]{1,0,0};
-		}
-		case 3:{
-			return new double[3]{-1,0,0};
-		}
-		case 4:{
-			return new double[3]{0,0,1};
-		}
-		case 5:{
-			return new double[3]{0,0,-1};
+	}else{
+		switch(surface)
+		{
+			case 0:{
+				return new double[3]{0,-1,0};
+			}
+			case 1:{
+				return new double[3]{0,1,0};
+			}
+			case 2:{
+				return new double[3]{-1,0,0};
+			}
+			case 3:{
+				return new double[3]{1,0,0};
+			}
+			case 4:{
+				return new double[3]{0,0,-1};
+			}
+			case 5:{
+				return new double[3]{0,0,1};
+			}
 		}
 	}
 	return NULL;

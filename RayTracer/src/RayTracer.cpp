@@ -136,6 +136,7 @@ int main(int argc, char** argv) {
 	//RayTracer* tracer = new RayTracer("./files/BoolObjCubeTest.sdl", 4, 1);
 	//RayTracer* tracer = new RayTracer("./files/ComplexBoolObjTest.sdl", 4, 1);
 	RayTracer* tracer = new RayTracer("./files/BallInCubeBool.sdl", 4, 1);
+	//RayTracer* tracer = new RayTracer("./files/InsideCubeTest.sdl", 4, 1);
 
 	delete tracer;
 	return 0;
