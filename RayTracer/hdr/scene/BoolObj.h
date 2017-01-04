@@ -51,6 +51,7 @@ private:
 
 	void addCalc(std::vector<Hit*>*, std::vector<Hit*>*);
 	void substractCalc(std::vector<Hit*>*, std::vector<Hit*>*);
+	void multCalc(std::vector<Hit*>*, std::vector<Hit*>*);
 
 	bool compareObjectsComplex(GeoObj*, GeoObj*);
 };

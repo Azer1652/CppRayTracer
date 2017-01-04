@@ -79,57 +79,13 @@ void BoolObj::analyseProblem(vector<Hit*>* hits) {
 void BoolObj::selectHits(vector<Hit*>* hits, std::vector<Hit*>* hitData) {
 	switch(operation){
 	case ADD:
-		switch (this->problemType) {
-		case OUT_FIRST:
-		case OUT_SECOND:
-			hitData->push_back(new Hit(hits->front()));
-			hitData->push_back(new Hit(hits->back()));
-			break;
-		case FIRST_IN:
-		case SECOND_IN:
-		case BOTH_FIRST:
-		case BOTH_SECOND:
-		case FIRST_OUT:
-		case SECOND_OUT:
-			hitData->push_back(new Hit(hits->back()));
-			break;
-		case NO_OP:
-			//ADD ALL
-			for (Hit* hit : *hits) {
-				hitData->push_back(new Hit(hit));
-			}
-			break;
-		}
+		addCalc(hits, hitData);
 		break;
 	case SUBSTRACT:
 		substractCalc(hits, hitData);
 		break;
 	case MULTIPLY:
-		switch (this->problemType) {
-		case OUT_FIRST:
-		case OUT_SECOND:
-			hitData->push_back(new Hit(hits->at(1)));
-			hitData->push_back(new Hit(hits->at(2)));
-			break;
-		case FIRST_OUT:
-			//none
-			break;
-		case FIRST_IN:
-		case SECOND_IN:
-			hitData->push_back(new Hit(hits->front()));
-			hitData->push_back(new Hit(hits->at(1)));
-			break;
-		case BOTH_FIRST:
-		case BOTH_SECOND:
-			hitData->push_back(new Hit(hits->front()));
-			break;
-		case SECOND_OUT:
-			//none
-			break;
-		case NO_OP:
-			//not existant
-			break;
-		}
+		multCalc(hits, hitData);
 		break;
 	}
 }
@@ -145,9 +101,9 @@ void BoolObj::addCalc(std::vector<Hit*>* hits, std::vector<Hit*>* hitData){
 
 void BoolObj::substractCalc(std::vector<Hit*>* hits, std::vector<Hit*>* hitData){
 	if(hits->size() == 1){
-		if(hits->front()->obj == objects[0] && !hits->front()->getEntering())
+		if(compareObjectsComplex(hits->front()->obj, objects[0]) && !hits->front()->getEntering())
 			hitData->push_back(new Hit(hits->front()));
-		if(hits->front()->obj == objects[1] && hits->front()->getEntering())
+		if(compareObjectsComplex(hits->front()->obj, objects[1]) && hits->front()->getEntering())
 			hitData->push_back(new Hit(hits->front()));
 		return;
 	}else{
@@ -219,7 +175,7 @@ void BoolObj::substractCalc(std::vector<Hit*>* hits, std::vector<Hit*>* hitData)
 					hitData->push_back(new Hit(curr));
 				}
 
-				//if second object found exiting without exit, all previous hits are invalidated
+				//if second object found exiting without enter, all previous hits are invalidated
 				if(compareObjectsComplex(curr->getObj(), objects[1]) && !curr->getEntering()){
 					for(Hit* hit : hitBuffer)
 						delete hit;
@@ -232,6 +188,110 @@ void BoolObj::substractCalc(std::vector<Hit*>* hits, std::vector<Hit*>* hitData)
 						hitData->push_back(hit);
 					hitBuffer.clear();
 				}
+			}
+
+
+			prev = curr;
+		}
+		if(!hitBuffer.empty()){
+			for(Hit* hit : hitBuffer)
+				hitData->push_back(hit);
+			hitBuffer.clear();
+		}
+	}
+}
+
+void BoolObj::multCalc(std::vector<Hit*>* hits, std::vector<Hit*>* hitData){
+	if(hits->size() == 1){
+		//none
+	}else if(hits->size() == 2){
+		if(compareObjectsComplex(hits->front()->obj, objects[0]) && !hits->front()->getEntering())
+			hitData->push_back(new Hit(hits->front()));
+		if(compareObjectsComplex(hits->front()->obj, objects[1]) && !hits->front()->getEntering())
+			hitData->push_back(new Hit(hits->front()));
+		return;
+	}else{
+		bool encapsulated = false;
+		Hit* prev = NULL;
+		//Analyze all hits
+		//Delete duplicates
+		Hit* curr = NULL;
+		for(vector<Hit*>::iterator it = hits->begin(); it!=hits->end();){
+			curr = (*it);
+			if(prev == NULL){
+				prev = curr;
+				it++;
+				continue;
+			}
+			if(abs(prev->getTime()-curr->getTime())<0.00000001){
+				if(compareObjectsComplex(curr->getObj(), this)){
+					it = hits->erase(it-1);
+					it++;
+				}else{
+					it = hits->erase(it);
+				}
+
+			}else{
+				prev = curr;
+				it++;
+			}
+		}
+
+		//Look for patterns
+		vector<Hit*> hitBuffer;
+		prev = NULL;
+		for(Hit* curr : *hits){
+			if(prev == NULL){
+				prev = curr;
+				continue;
+			}
+
+			if((compareObjectsComplex(prev->getObj(), objects[1]) && prev->getEntering()) ||
+				(compareObjectsComplex(prev->getObj(), objects[0]) && prev->getEntering())){
+				encapsulated = true;
+			}
+
+			if((compareObjectsComplex(prev->getObj(), objects[1]) && !prev->getEntering()) ||
+				(compareObjectsComplex(prev->getObj(), objects[0]) && !prev->getEntering())){
+				encapsulated = false;
+			}
+
+			if(!encapsulated){
+				//first obj In followed by Second obj out
+				if(compareObjectsComplex(prev->getObj(), objects[0]) && prev->getEntering() && compareObjectsComplex(curr->getObj(), objects[1]) && !curr->getEntering()){
+					hitBuffer.push_back(new Hit(prev));
+					Hit* newHit = new Hit(curr);
+					newHit->setEntering(false);
+					//newHit->flipNormal();
+					hitBuffer.push_back(newHit);
+				}
+
+				//second obj in followed by first obj out
+				if(compareObjectsComplex(prev->getObj(), objects[1]) && prev->getEntering() && compareObjectsComplex(curr->getObj(), objects[0]) && !curr->getEntering()){
+					Hit* prevHit = new Hit(prev);
+					prevHit->setEntering(true);
+					//prevHit->flipNormal();
+					hitData->push_back(prevHit);
+					hitData->push_back(new Hit(curr));
+				}
+
+				//if second object found exiting without enter, all previous hits true
+				if(compareObjectsComplex(curr->getObj(), objects[1]) && !curr->getEntering()){
+					for(Hit* hit : hitBuffer)
+						hitData->push_back(hit);
+					hitBuffer.clear();
+
+				}
+
+				//previous ones were really not encapsulated by second object -> invalidated
+				if(compareObjectsComplex(curr->getObj(), objects[1]) && curr->getEntering()){
+					for(Hit* hit : hitBuffer)
+						delete hit;
+					hitBuffer.clear();
+				}
+			}else{	//encapsulated
+				//just add current Hit
+				hitBuffer.push_back(new Hit(curr));
 			}
 
 
