@@ -32,7 +32,7 @@ OBJECTS[
 		)
 	}
 
-	BAR{
+	SPHERE{
 		POSITION(
 			x=0;
 			y=0;

@@ -11,6 +11,7 @@
 #include "../../../hdr/scene/Light.h"
 #include "../../../hdr/scene/Bar.h"
 #include "../../../hdr/scene/Sphere.h"
+#include "../../../hdr/scene/Cone.h"
 #include "../../../hdr/scene/BoolObj.h"
 #include "../../../hdr/scene/materials/Material.h"
 #include "../../../hdr/scene/materials/Wall.h"
@@ -58,7 +59,7 @@ void Parser::readObjects(){
 		}else if(sCurrentLine.find("\tBAR{") != string::npos){
 			this->scene->getObjects()->push_back(readBar());
 		}else if(sCurrentLine.find("\tCONE{") != string::npos){
-			//readCone();
+			this->scene->getObjects()->push_back(readCone());
 		}else if(sCurrentLine.find("\tSPHERE{") != string::npos){
 			this->scene->getObjects()->push_back(readSphere());
 		}else if(sCurrentLine.find("\tBOOL<") != string::npos){
@@ -126,7 +127,8 @@ BoolObj* Parser::readBool(){
 			obj[i] = readBar();
 			i++;
 		}else if(sCurrentLine.find("\tCONE{") != string::npos){
-			//readCone();
+			obj[i] = readCone();
+			i++;
 		}else if(sCurrentLine.find("\tSPHERE{") != string::npos){
 			obj[i] = readSphere();
 			i++;
@@ -186,6 +188,29 @@ Sphere* Parser::readSphere(){
 	sphere->generateTransform();
 	sphere->generateInverse();
 	return sphere;
+}
+
+Cone* Parser::readCone(){
+	cout << "Creating Cone." << endl;
+	getline(infile, sCurrentLine);
+	line++;
+	Cone* cone = new Cone();
+	while((infile && ((sCurrentLine.find("}")) == string::npos))){
+		if(sCurrentLine.find("\t\tDIMENSIONS(") != string::npos){
+			cone->setDims(readABC());
+		}else if(sCurrentLine.find("\t\tROTATION(") != string::npos){
+			cone->setRot(readABC());
+		}else if(sCurrentLine.find("\t\tPOSITION(") != string::npos){
+			cone->setPosition(readPos());
+		}else if(sCurrentLine.find("\t\tMATERIAL(") != string::npos){
+			cone->setMat(readMat());
+		}
+		getline(infile, sCurrentLine);
+		line++;
+	}
+	cone->generateTransform();
+	cone->generateInverse();
+	return cone;
 }
 
 double* Parser::readABC(){

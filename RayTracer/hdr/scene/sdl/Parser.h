@@ -18,6 +18,7 @@ class Scene;
 class Material;
 class Bar;
 class Sphere;
+class Cone;
 class BoolObj;
 
 class Parser {
@@ -38,8 +39,7 @@ private:
 	BoolObj* readBool();
 	Bar* readBar();
 	Sphere* readSphere();
-	//void readSphere();
-	//void readCone();
+	Cone* readCone();
 
 	void setCamLocation();
 	void setCamUp();

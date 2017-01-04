@@ -13,6 +13,7 @@
 #include "../hdr/scene/Scene.h"
 #include "../hdr/scene/Bar.h"
 #include "../hdr/scene/Sphere.h"
+#include "../hdr/scene/Cone.h"
 #include "../hdr/Lib.h"
 #include "../hdr/scene/Light.h"
 #include "../hdr/scene/materials/Material.h"
