@@ -21,6 +21,9 @@ Hit::Hit(Hit* h) {
 	this->obj = h->obj;
 	normal = new double[3] {h->getNormal()[0],h->getNormal()[1],h->getNormal()[2]};
 	position = new double[3] {h->getPosition()[0],h->getPosition()[1],h->getPosition()[2]};
+	originalPosition[0] = h->originalPosition[0];
+	originalPosition[1] = h->originalPosition[1];
+	originalPosition[2] = h->originalPosition[2];
 	time = h->getTime();
 	entering = h->getEntering();
 }

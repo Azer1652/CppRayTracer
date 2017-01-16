@@ -129,7 +129,8 @@ int main(int argc, char** argv) {
 	//RayTracer* tracer = new RayTracer("./files/RefractionTestScene.sdl", 4, 1);
 	//RayTracer* tracer = new RayTracer("./files/ToothbrushScene.sdl", 4, 1);
 	//RayTracer* tracer = new RayTracer("./files/SphereScene.sdl", 4, 1);
-	RayTracer* tracer = new RayTracer("./files/ConeTests.sdl", 4, 1);
+	//RayTracer* tracer = new RayTracer("./files/ConeScene.sdl", 4, 1);
+	//RayTracer* tracer = new RayTracer("./files/CylinderScene.sdl", 4, 1);
 	//RayTracer* tracer = new RayTracer("./files/BoxScene.sdl");
 	//RayTracer* tracer = new RayTracer("./files/ConeScene.sdl");
 	//RayTracer* tracer = new RayTracer("./files/JanSphereScene.sdl", 4, 1);
@@ -139,6 +140,8 @@ int main(int argc, char** argv) {
 	//RayTracer* tracer = new RayTracer("./files/BallInSubstractedCube.sdl", 4, 1);
 	//RayTracer* tracer = new RayTracer("./files/InsideBallTest.sdl", 4, 1);
 	//RayTracer* tracer = new RayTracer("./files/MultBoolTest.sdl", 4, 1);
+	//RayTracer* tracer = new RayTracer("./files/Dice.sdl", 4, 1);
+	RayTracer* tracer = new RayTracer("./files/Desk.sdl", 4, 1);
 
 	delete tracer;
 	return 0;

@@ -1,0 +1,52 @@
+OBJECTS[
+	CAMERA{
+		POSITION(
+			x=90;
+			y=0;
+			z=0;
+		)
+		
+		LOOKAT(
+			x=0;
+			y=0;
+			z=0;
+		)
+		
+		UP(
+			x=0;
+			y=1;
+			z=0;
+		)
+	}
+	
+	LIGHT{
+		POSITION(
+			x=90;
+			y=200;
+			z=-50;
+		)
+		COLOR(
+			r=.9;
+			g=.9;
+			b=.9;
+		)
+	}
+	
+	BAR{
+		POSITION(
+			x=0;
+			y=0;
+			z=0;
+		)
+		DIMENSIONS(
+			a=1;
+			b=18;
+			c=32;
+		)
+		MATERIAL(
+			texture=desktop.bmp
+			e/missiveB=1;
+			e/missiveR=1;
+			e/missiveG=1;
+		)
+	}

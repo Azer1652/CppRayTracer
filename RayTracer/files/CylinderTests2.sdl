@@ -1,0 +1,68 @@
+OBJECTS[
+	CAMERA{
+		POSITION(
+			x=5;
+			y=2;
+			z=0;
+		)
+		
+		LOOKAT(
+			x=0;
+			y=2;
+			z=0;
+		)
+		
+		UP(
+			x=0;
+			y=1;
+			z=0;
+		)
+	}
+	
+	LIGHT{
+		POSITION(
+			x=-1;
+			y=6.25;
+			z=-.5;
+		)
+		
+		COLOR(
+			r=.9;
+			g=.9;
+			b=.9;
+		)
+	}
+	
+
+	
+	CYLINDER{
+		DIMENSIONS(
+			a=1;
+			b=1;
+			c=1;
+		)
+		
+		POSITION(
+			x=0;
+			y=1;
+			z=-1.5;	
+		)
+		
+		ROTATION(
+			a=90;
+			b=0;
+			c=0;
+		)
+		
+		MATERIAL(
+			WALL;
+			diffuseB=.5;
+			diffuseR=.5;
+			diffuseG=.5;
+			specularR=.5;
+			specularG=.5;
+			specularB=.5;
+			specularExponent=0.2;
+		)
+	}
+

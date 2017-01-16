@@ -6,6 +6,12 @@
  */
 
 #include "../../../hdr/scene/materials/Material.h"
+#include "../../../hdr/matrices/TextureMatrix.h"
+
+#include <stdio.h>
+#include <string>
+
+using namespace std;
 
 Material::Material() {
 	ambient = new double[3]{0,0,0};
@@ -104,4 +110,46 @@ void Material::setTexture(double x){
 
 double Material::getTexture(){
 	return texture;
+}
+
+TextureMatrix* Material::getTextureMatrix(){
+	return textureMatrix;
+}
+
+void Material::readBMP(const char* filename){
+	string s = "./files/textures/";
+	FILE* f = fopen(s.append(filename).c_str(), "rb");
+	if (f!=NULL)
+	{
+		textureFromFile=true;
+		unsigned char info[54];
+		fread(info, sizeof(unsigned char), 54, f); // read the 54-byte header
+
+		// extract image height and width from header
+		textureWidth = *(int*)&info[18];
+		textureHeight = *(int*)&info[22];
+
+		int row_padded = (textureWidth*3 + 3) & (~3);
+		unsigned char* data = new unsigned char[row_padded];
+		unsigned char tmp;
+
+		textureMatrix = new TextureMatrix(textureWidth, textureHeight);
+		int realJ = 0;
+		for(int i = 0; i < textureHeight; i++){
+			fread(data, sizeof(unsigned char), row_padded, f);
+			for(int j = 0; j < textureWidth*3; j += 3){
+				delete[] textureMatrix->array[realJ][i];
+				textureMatrix->array[realJ][i] = new double[3]{(int)data[j+2], (int)data[j+1], (int)data[j]};
+				textureMatrix->array[realJ][i][0] /= 255.0;
+				textureMatrix->array[realJ][i][1] /= 255.0;
+				textureMatrix->array[realJ][i][2] /= 255.0;
+				realJ++;
+			}
+			realJ=0;
+		}
+
+		fclose(f);
+		delete[] data;
+	}
+
 }

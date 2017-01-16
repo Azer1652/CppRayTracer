@@ -9,6 +9,7 @@
 #include "../../hdr/Lib.h"
 #include "../../hdr/Ray.h"
 #include "../../hdr/Hit.h"
+#include "../../hdr/scene/materials/Material.h"
 
 #include <cmath>
 
@@ -33,33 +34,33 @@ void Bar::hit(Ray* r, vector<Hit*>* hitData){
 		switch(i){
 			case 0: {
 				numer=1.0-ray->getLocation()[1];
-					denom= ray->getDirection()[1];
-					break;
+				denom= ray->getDirection()[1];
+				break;
 			}
 			case 1:{
 				numer=1.0+ray->getLocation()[1];
-					denom=-ray->getDirection()[1];
-					break;
+				denom=-ray->getDirection()[1];
+				break;
 			}
 			case 2: {
-					numer=1.0-ray->getLocation()[0];
-					denom=ray->getDirection()[0];
-					break;
+				numer=1.0-ray->getLocation()[0];
+				denom=ray->getDirection()[0];
+				break;
 			}
 			case 3: {
 				numer=1.0+ray->getLocation()[0];
-					denom=-ray->getDirection()[0];
-					break;
+				denom=-ray->getDirection()[0];
+				break;
 			}
 			case 4: {
 				numer=1.0-ray->getLocation()[2];
-					denom=ray->getDirection()[2];
-					break;
+				denom=ray->getDirection()[2];
+				break;
 			}
 			case 5:{
 				numer=1.0+ray->getLocation()[2];
-					denom=-ray->getDirection()[2];
-					break;
+				denom=-ray->getDirection()[2];
+				break;
 			}
 		}
 
@@ -97,6 +98,11 @@ void Bar::hit(Ray* r, vector<Hit*>* hitData){
 		hit->setObj(this);
 		hit->setEntering(true);
 		hit->setNormal(getNormal(inSurf, true));
+		if(mat->textureFromFile){
+			hit->originalPosition[0] = ray->getLocation()[0]+ray->getDirection()[0]*tIn;
+			hit->originalPosition[1] = ray->getLocation()[1]+ray->getDirection()[1]*tIn;
+			hit->originalPosition[2] = ray->getLocation()[2]+ray->getDirection()[2]*tIn;
+		}
 		hitData->push_back(hit);
 	}
 	if(tOut > 0.000001){
@@ -109,6 +115,11 @@ void Bar::hit(Ray* r, vector<Hit*>* hitData){
 		hit->setObj(this);
 		hit->setEntering(false);
 		hit->setNormal(getNormal(outSurf, false));
+		if(mat->textureFromFile){
+			hit->originalPosition[0] = ray->getLocation()[0]+ray->getDirection()[0]*tOut;
+			hit->originalPosition[1] = ray->getLocation()[1]+ray->getDirection()[1]*tOut;
+			hit->originalPosition[2] = ray->getLocation()[2]+ray->getDirection()[2]*tOut;
+		}
 		hitData->push_back(hit);
 	}
 	delete ray;

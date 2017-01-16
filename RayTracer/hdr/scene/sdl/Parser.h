@@ -19,6 +19,7 @@ class Material;
 class Bar;
 class Sphere;
 class Cone;
+class Cylinder;
 class BoolObj;
 
 class Parser {
@@ -40,6 +41,7 @@ private:
 	Bar* readBar();
 	Sphere* readSphere();
 	Cone* readCone();
+	Cylinder* readCylinder();
 
 	void setCamLocation();
 	void setCamUp();

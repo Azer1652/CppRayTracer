@@ -290,14 +290,14 @@ void BoolObj::multCalc(std::vector<Hit*>* hits, std::vector<Hit*>* hitData){
 					hitBuffer.clear();
 				}
 			}else{	//encapsulated
-				//just add current Hit
+				//Add all previous hits
 				hitBuffer.push_back(new Hit(curr));
 			}
 
 
 			prev = curr;
 		}
-		if(!hitBuffer.empty()){
+		if(!hitBuffer.empty() && !encapsulated){
 			for(Hit* hit : hitBuffer)
 				hitData->push_back(hit);
 			hitBuffer.clear();

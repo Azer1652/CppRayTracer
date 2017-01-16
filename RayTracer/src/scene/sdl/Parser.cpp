@@ -12,6 +12,7 @@
 #include "../../../hdr/scene/Bar.h"
 #include "../../../hdr/scene/Sphere.h"
 #include "../../../hdr/scene/Cone.h"
+#include "../../../hdr/scene/Cylinder.h"
 #include "../../../hdr/scene/BoolObj.h"
 #include "../../../hdr/scene/materials/Material.h"
 #include "../../../hdr/scene/materials/Wall.h"
@@ -62,7 +63,9 @@ void Parser::readObjects(){
 			this->scene->getObjects()->push_back(readCone());
 		}else if(sCurrentLine.find("\tSPHERE{") != string::npos){
 			this->scene->getObjects()->push_back(readSphere());
-		}else if(sCurrentLine.find("\tBOOL<") != string::npos){
+		}else if(sCurrentLine.find("\tCYLINDER{") != string::npos){
+					this->scene->getObjects()->push_back(readCylinder());
+		}else if(sCurrentLine.find("BOOL<") != string::npos){
 			this->scene->getObjects()->push_back(readBool());
 		}
 
@@ -131,6 +134,9 @@ BoolObj* Parser::readBool(){
 			i++;
 		}else if(sCurrentLine.find("\tSPHERE{") != string::npos){
 			obj[i] = readSphere();
+			i++;
+		}else if(sCurrentLine.find("\tCYLINDER") != string::npos){
+			obj[i] = readCylinder();
 			i++;
 		}else if(sCurrentLine.find("\tBOOL<") != string::npos){
 			obj[i] = readBool();
@@ -211,6 +217,29 @@ Cone* Parser::readCone(){
 	cone->generateTransform();
 	cone->generateInverse();
 	return cone;
+}
+
+Cylinder* Parser::readCylinder(){
+	cout << "Creating Cone." << endl;
+	getline(infile, sCurrentLine);
+	line++;
+	Cylinder* cylinder = new Cylinder();
+	while((infile && ((sCurrentLine.find("}")) == string::npos))){
+		if(sCurrentLine.find("\t\tDIMENSIONS(") != string::npos){
+			cylinder->setDims(readABC());
+		}else if(sCurrentLine.find("\t\tROTATION(") != string::npos){
+			cylinder->setRot(readABC());
+		}else if(sCurrentLine.find("\t\tPOSITION(") != string::npos){
+			cylinder->setPosition(readPos());
+		}else if(sCurrentLine.find("\t\tMATERIAL(") != string::npos){
+			cylinder->setMat(readMat());
+		}
+		getline(infile, sCurrentLine);
+		line++;
+	}
+	cylinder->generateTransform();
+	cylinder->generateInverse();
+	return cylinder;
 }
 
 double* Parser::readABC(){
@@ -309,7 +338,10 @@ Material* Parser::readMat(){
 		}*/
 	}
 	while((infile && ((sCurrentLine.find(")")) == string::npos))){
-		if(sCurrentLine.find("reflectivity=") != string::npos){
+		if(sCurrentLine.find("texture=") != string::npos){
+			size_t location = sCurrentLine.find("=");
+			mat->readBMP(sCurrentLine.substr(location+1).c_str());
+		}else if(sCurrentLine.find("reflectivity=") != string::npos){
 			size_t location = sCurrentLine.find("=");
 			mat->setReflectivity(atof(sCurrentLine.substr(location+1).c_str()));
 		}else if(sCurrentLine.find("transparency=") != string::npos){

@@ -72,8 +72,8 @@ void Cone::hit(Ray* r, vector<Hit*>* hitData){
 												1.41});
 				}else{
 					hit->setEntering(false);
-					hit->setNormal(new double[3]{ray->getLocation()[0]-ray->getDirection()[0]*t2,
-												ray->getLocation()[1]-ray->getDirection()[1]*t2,
+					hit->setNormal(new double[3]{-(ray->getLocation()[0]+ray->getDirection()[0]*t2),
+												-(ray->getLocation()[1]+ray->getDirection()[1]*t2),
 												-1.41});
 				}
 
@@ -101,8 +101,8 @@ void Cone::hit(Ray* r, vector<Hit*>* hitData){
 				}
 				else{
 					hit->setEntering(false);
-					hit->setNormal(new double[3]{ray->getLocation()[0]-ray->getDirection()[0]*t1,
-												ray->getLocation()[1]-ray->getDirection()[1]*t1,
+					hit->setNormal(new double[3]{-(ray->getLocation()[0]+ray->getDirection()[0]*t1),
+												-(ray->getLocation()[1]+ray->getDirection()[1]*t1),
 												-1.41});
 				}
 

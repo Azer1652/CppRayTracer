@@ -14,9 +14,11 @@
 #include "../hdr/scene/Bar.h"
 #include "../hdr/scene/Sphere.h"
 #include "../hdr/scene/Cone.h"
+#include "../hdr/scene/Cylinder.h"
 #include "../hdr/Lib.h"
 #include "../hdr/scene/Light.h"
 #include "../hdr/scene/materials/Material.h"
+#include "../hdr/matrices/TextureMatrix.h"
 
 #include <vector>
 #include <algorithm>
@@ -133,6 +135,29 @@ double* Ray::setResult(Hit* a){
 void Ray::calculate(Hit* a){
 	//Emissive part
 	GeoObj* b = a->getObj();
+	double diffuse[3]{0,0,0};
+	//Texture
+	if(b->getMaterial()->textureFromFile){
+		int y = (a->originalPosition[1]+1)*540;
+		int x = (a->originalPosition[2]+1)*960;
+		//Change all important colors with texture;
+		diffuse[0] = b->getMaterial()->getTextureMatrix()->array[x][y][0];
+		diffuse[1] = b->getMaterial()->getTextureMatrix()->array[x][y][1];
+		diffuse[2] = b->getMaterial()->getTextureMatrix()->array[x][y][2];
+	}else{
+		diffuse[0] = b->getMaterial()->getDiffuse()[0];
+		diffuse[1] = b->getMaterial()->getDiffuse()[1];
+		diffuse[2] = b->getMaterial()->getDiffuse()[2];
+	}
+	if(b->getMaterial()->getTexture() == 1){
+		int pos[3] = {a->getPosition()[0]*4, a->getPosition()[1]*4, a->getPosition()[2]*4};
+		if(pos[0] % 2 == 0 && pos[2] % 2 == 0 && pos[1] %2 == 0){
+			//Keep original color
+		}
+		else{
+			Lib::dot3DArr(color, 0.4, color);
+		}
+	}
 	double* emissive = b->getMaterial()->getEmissive();
 	color[0] = emissive[0];
 	color[1] = emissive[1];
@@ -172,7 +197,7 @@ void Ray::calculate(Hit* a){
 				Lib::normalize(s);
 				double mDotS = s[0]*normalN[0] + s[1]*normalN[1] + s[2]*normalN[2];
 				if(mDotS>0){
-					double diffColor[3] {b->getMaterial()->getDiffuse()[0],b->getMaterial()->getDiffuse()[1],b->getMaterial()->getDiffuse()[2]};
+					double diffColor[3] {diffuse[0],diffuse[1],diffuse[2]};
 					Lib::multiply(diffColor, light->getColor());
 					Lib::multiply(diffColor, mDotS);
 					Lib::add(color, diffColor);
@@ -198,7 +223,7 @@ void Ray::calculate(Hit* a){
 			Lib::normalize(s);
 			double mDotS = s[0]*normalN[0] + s[1]*normalN[1] + s[2]*normalN[2];
 			if(mDotS>0){
-				double diffColor[3] {b->getMaterial()->getDiffuse()[0],b->getMaterial()->getDiffuse()[1],b->getMaterial()->getDiffuse()[2]};
+				double diffColor[3] {diffuse[0],diffuse[1],diffuse[2]};
 				Lib::multiply(diffColor, light->getColor());
 				Lib::multiply(diffColor, mDotS);
 				Lib::add(color, diffColor);
@@ -213,18 +238,6 @@ void Ray::calculate(Hit* a){
 				Lib::multiply(specColor, phong);
 				Lib::add(color, specColor);
 			}
-		}
-	}
-
-
-	//Texture
-	if(b->getMaterial()->getTexture() == 1){
-		int pos[3] = {a->getPosition()[0]*4, a->getPosition()[1]*4, a->getPosition()[2]*4};
-		if(pos[0] % 2 == 0 && pos[2] % 2 == 0 && pos[1] %2 == 0){
-			//Keep original color
-		}
-		else{
-			Lib::dot3DArr(color, 0.4, color);
 		}
 	}
 

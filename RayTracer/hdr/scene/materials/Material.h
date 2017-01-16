@@ -10,6 +10,8 @@
 
 #include <cstddef>
 
+class TextureMatrix;
+
 class Material {
 public:
 	Material();
@@ -42,6 +44,11 @@ public:
 	void setTexture(double);
 	double getTexture();
 
+	TextureMatrix* getTextureMatrix();
+
+	bool textureFromFile = false;
+	void readBMP(const char*);
+
 protected:
 	double* ambient;
 	double* diffuse;
@@ -56,6 +63,10 @@ protected:
 	double surfaceRoughness = 1;
 	double texture = 0;
 	double refIndex = 1;
+
+	int textureWidth;
+	int textureHeight;
+	TextureMatrix* textureMatrix = NULL;
 };
 
 #endif /* MATERIAL_H_ */

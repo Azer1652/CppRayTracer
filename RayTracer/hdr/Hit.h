@@ -39,9 +39,11 @@ public:
 	void setObj(GeoObj*);
 
 	double time;
+	double originalPosition[3]{0,0,0};
 private:
 	double* normal;
 	double* position;
+
 	bool entering;
 };
 

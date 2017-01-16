@@ -94,24 +94,24 @@ OBJECTS[
 		MULTIPLY:
 		SPHERE{
 			DIMENSIONS(
-				a=1;
+				a=0.2;
 				b=4;
 				c=4;
 			)
 			
 			POSITION(
-				x=7.1;
+				x=8.5;
 				y=5;
 				z=0;
 			)
 			
 			MATERIAL(
-				MIRROR;
+				GLASS;
 			)
 		}
 		SPHERE{
 			DIMENSIONS(
-				a=1;
+				a=0.2;
 				b=4;
 				c=4;
 			)
@@ -123,7 +123,7 @@ OBJECTS[
 			)
 			
 			MATERIAL(
-				MIRROR;
+				GLASS;
 			)
 		}
 ]

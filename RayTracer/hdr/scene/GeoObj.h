@@ -28,7 +28,8 @@ enum{
 	BOOLOBJ,
 	BAR,
 	SPHERE,
-	CONE
+	CONE,
+	CYLINDER
 };
 
 class GeoObj : public Obj{
