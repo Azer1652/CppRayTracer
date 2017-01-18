@@ -32,11 +32,11 @@ OBJECTS[
 		)
 	}
 	
-BO/OL<
-	SU/BSTRACT:
-	B/OOL<
-		M/ULTIPLY:
-		S/PHERE{
+BOOL<
+	SUBSTRACT:
+	BOOL<
+		MULTIPLY:
+		SPHERE{
 			POSITION(
 				x=0;
 				y=0;
@@ -55,7 +55,7 @@ BO/OL<
 				diffuseG=.0;
 			)
 		}
-		B/AR{
+		BAR{
 			POSITION(
 				x=0;
 				y=0;
@@ -75,11 +75,11 @@ BO/OL<
 			)
 		}
 	>
-	B/OOL<
+	BOOL<
 		ADD:
-		B/OOL<
+		BOOL<
 			ADD:
-			C/YLINDER{
+			CYLINDER{
 				POSITION(
 					x=0;
 					y=0;
@@ -97,7 +97,7 @@ BO/OL<
 					specularExponent=5;
 				)
 			}
-			C/YLINDER{
+			CYLINDER{
 				POSITION(
 					x=0;
 					y=-2.5;
@@ -110,7 +110,7 @@ BO/OL<
 				)
 				ROTATION(
 					a=-90;
-					b=180;
+					b=0;
 					c=0;
 				)
 				MATERIAL(
@@ -123,18 +123,18 @@ BO/OL<
 		>
 		CYLINDER{
 			POSITION(
-				x=0;
+				x=-2.5;
 				y=0;
 				z=0;
 			)
 			DIMENSIONS(
-				a=1;
-				b=1;
-				c=1;
+				a=5;
+				b=.7;
+				c=.7;
 			)
 			ROTATION(
-				a=-90;
-				b=0;
+				a=;
+				b=90;
 				c=0;
 			)
 			MATERIAL(

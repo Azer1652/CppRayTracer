@@ -51,7 +51,7 @@
 									<listOptionValue builtIn="false" value="glu32"/>
 									<listOptionValue builtIn="false" value="freeglut"/>
 								</option>
-								<option id="gnu.cpp.link.option.flags.811086518" name="Linker flags" superClass="gnu.cpp.link.option.flags" value="-std=c++11" valueType="string"/>
+								<option id="gnu.cpp.link.option.flags.811086518" name="Linker flags" superClass="gnu.cpp.link.option.flags" value="-std=c++11 -static" valueType="string"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.776606018" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 									<additionalInput kind="additionalinput" paths="$(LIBS)"/>

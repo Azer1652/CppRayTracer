@@ -45,9 +45,14 @@ public:
 	double getTexture();
 
 	TextureMatrix* getTextureMatrix();
+	bool getTextureIsEmissive();
 
 	bool textureFromFile = false;
 	void readBMP(const char*);
+	void setTextureIsEmissive(bool isEmissive);
+
+	int textureWidth;
+	int textureHeight;
 
 protected:
 	double* ambient;
@@ -64,9 +69,9 @@ protected:
 	double texture = 0;
 	double refIndex = 1;
 
-	int textureWidth;
-	int textureHeight;
+
 	TextureMatrix* textureMatrix = NULL;
+	bool textureIsEmissive = false;
 };
 
 #endif /* MATERIAL_H_ */

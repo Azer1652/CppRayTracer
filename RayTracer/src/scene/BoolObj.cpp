@@ -91,12 +91,17 @@ void BoolObj::selectHits(vector<Hit*>* hits, std::vector<Hit*>* hitData) {
 }
 
 void BoolObj::addCalc(std::vector<Hit*>* hits, std::vector<Hit*>* hitData){
+	//Just Push Back everything
+	for(Hit* hit : *hits)
+		hitData->push_back(new Hit(hit));
+	/*
 	if(hits->size() == 1){
 		hitData->push_back(new Hit(hits->front()));
 	}else{
 		hitData->push_back(new Hit(hits->front()));
 		hitData->push_back(new Hit(hits->back()));
 	}
+	*/
 }
 
 void BoolObj::substractCalc(std::vector<Hit*>* hits, std::vector<Hit*>* hitData){

@@ -153,3 +153,11 @@ void Material::readBMP(const char* filename){
 	}
 
 }
+
+bool Material::getTextureIsEmissive(){
+	return this->textureIsEmissive;
+}
+
+void Material::setTextureIsEmissive(bool isEmissive){
+	this->textureIsEmissive = isEmissive;
+}

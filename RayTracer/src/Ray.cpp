@@ -135,15 +135,34 @@ double* Ray::setResult(Hit* a){
 void Ray::calculate(Hit* a){
 	//Emissive part
 	GeoObj* b = a->getObj();
+	double emissive[3]{0,0,0};
 	double diffuse[3]{0,0,0};
 	//Texture
 	if(b->getMaterial()->textureFromFile){
-		int y = (a->originalPosition[1]+1)*540;
-		int x = (a->originalPosition[2]+1)*960;
+		int y = ((a->originalPosition[1]+1)*b->getMaterial()->textureHeight/2.0);
+		int x = ((a->originalPosition[2]+1)*b->getMaterial()->textureWidth/2.0);
+		//boundary checks
+		if(x<0)
+			x=0;
+		if(y<0)
+			y=0;
+		if(x>=b->getMaterial()->textureWidth)
+			x=b->getMaterial()->textureWidth-1;
+		if(y>=b->getMaterial()->textureHeight)
+			y=b->getMaterial()->textureHeight-1;
 		//Change all important colors with texture;
-		diffuse[0] = b->getMaterial()->getTextureMatrix()->array[x][y][0];
-		diffuse[1] = b->getMaterial()->getTextureMatrix()->array[x][y][1];
-		diffuse[2] = b->getMaterial()->getTextureMatrix()->array[x][y][2];
+		if(b->getMaterial()->getTextureIsEmissive()){
+			emissive[0] = b->getMaterial()->getTextureMatrix()->array[x][y][0];
+			emissive[1] = b->getMaterial()->getTextureMatrix()->array[x][y][1];
+			emissive[2] = b->getMaterial()->getTextureMatrix()->array[x][y][2];
+		}else{
+			emissive[0] = b->getMaterial()->getEmissive()[0];
+			emissive[1] = b->getMaterial()->getEmissive()[1];
+			emissive[2] = b->getMaterial()->getEmissive()[2];
+			diffuse[0] = b->getMaterial()->getTextureMatrix()->array[x][y][0];
+			diffuse[1] = b->getMaterial()->getTextureMatrix()->array[x][y][1];
+			diffuse[2] = b->getMaterial()->getTextureMatrix()->array[x][y][2];
+		}
 	}else{
 		diffuse[0] = b->getMaterial()->getDiffuse()[0];
 		diffuse[1] = b->getMaterial()->getDiffuse()[1];
@@ -158,19 +177,18 @@ void Ray::calculate(Hit* a){
 			Lib::dot3DArr(color, 0.4, color);
 		}
 	}
-	double* emissive = b->getMaterial()->getEmissive();
 	color[0] = emissive[0];
 	color[1] = emissive[1];
 	color[2] = emissive[2];
 	//ambient part
-	double* ambientClr = tracer->getScene()->getAmbient();
+	double* ambientClr = new double[3]{tracer->getScene()->getAmbient()[0],tracer->getScene()->getAmbient()[1],tracer->getScene()->getAmbient()[2]};
 	Lib::multiply(ambientClr, b->getMaterial()->getAmbient());
 	Lib::add(color, ambientClr);
 	//Shadow Calculations
 	//lights was itr
 	vector<Light*>* lights = tracer->getScene()->getLights();
 	double* normalN;
-	normalN = Lib::xfrmNormal(b->getInverseTransform(), a->getNormal());
+	normalN = Lib::xfrmNormal(b->getTransform(), a->getNormal());
 	Lib::normalize(normalN);
 	double v[] {-this->direction[0], -this->direction[1], -this->direction[2]};
 	Lib::normalize(v);
@@ -325,6 +343,7 @@ void Ray::calculate(Hit* a){
 	if(color[2] > 1)
 		color[2] = 1;
 	delete[] normalN;
+	delete[] ambientClr;
 	//return color;
 }
 

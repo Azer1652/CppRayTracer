@@ -341,6 +341,8 @@ Material* Parser::readMat(){
 		if(sCurrentLine.find("texture=") != string::npos){
 			size_t location = sCurrentLine.find("=");
 			mat->readBMP(sCurrentLine.substr(location+1).c_str());
+		}else if(sCurrentLine.find("textureType=emissive") != string::npos){
+			mat->setTextureIsEmissive(true);
 		}else if(sCurrentLine.find("reflectivity=") != string::npos){
 			size_t location = sCurrentLine.find("=");
 			mat->setReflectivity(atof(sCurrentLine.substr(location+1).c_str()));

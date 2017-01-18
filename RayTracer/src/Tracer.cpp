@@ -43,7 +43,7 @@ void Tracer::start(int recursion, int blockSize, bool shadows, ViewMatrix* matri
 	//Singlethreaded approach for simplification
 	mans.push_back(new RayManager(this, recursion, blockSize, shadows, matrix));
 	mans[0]->run();
-	*/
+	 */
 
 	//8 threads
 	int div = 0;
@@ -68,7 +68,7 @@ void Tracer::start(int recursion, int blockSize, bool shadows, ViewMatrix* matri
 		delete man;
 	mans.clear();
 
-
+	RayTracer::drawn = true;
 	clock_t end = clock();
 	double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
 	cout << "Elapsed time: " << elapsed_secs << " sec." << endl;

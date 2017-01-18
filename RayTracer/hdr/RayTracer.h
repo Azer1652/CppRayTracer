@@ -29,6 +29,8 @@ class RayTracer{
 		static Scene* scene;
 
 		static ViewMatrix* matrix;
+		static bool drawn;
+		static bool reallyDrawn;
 
 	private:
 		void init(std::string, int, int);
@@ -42,7 +44,7 @@ class RayTracer{
 		//MyKeyListener KL;
 		Tracer* tracer = NULL;
 
-		static const unsigned int targetTime = (1/30.0)*1000;
+		static const unsigned int targetTime = (1/10.0)*1000;
 
 };
 

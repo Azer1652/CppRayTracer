@@ -17,6 +17,8 @@
 
 Scene* RayTracer::scene;
 ViewMatrix* RayTracer::matrix = new ViewMatrix();
+bool RayTracer::drawn = false;
+bool RayTracer::reallyDrawn = false;
 
 RayTracer::RayTracer(string fileName){
 	init(fileName, 4, 1);
@@ -79,8 +81,13 @@ void RayTracer::init(string fileName, int recursion, int blockSize){
 }
 
 void RayTracer::framerateControl(int t){
-	glutPostRedisplay();
-	glutTimerFunc(targetTime, framerateControl, 0);
+	if(!reallyDrawn){
+		if(drawn){
+			reallyDrawn = true;
+		}
+		glutPostRedisplay();
+		glutTimerFunc(targetTime, framerateControl, 0);
+	}
 }
 
 /* Handler for window-repaint event. Call back when the window first appears and
@@ -125,7 +132,24 @@ void RayTracer::keyboard(unsigned char key, int x, int y){
 /* Main function: GLUT runs as a console application starting at main()  */
 int main(int argc, char** argv) {
 	glutInit(&argc, argv);	// Initialize GLUT
+	RayTracer* tracer;
 
+	switch(argc){
+	case 2:
+		tracer = new RayTracer(argv[1], 4, 1);
+		break;
+	case 3:
+		tracer = new RayTracer(argv[1], atof(argv[2]), 1);
+		break;
+	case 4:
+		tracer = new RayTracer(argv[1], atof(argv[2]), atof(argv[3]));
+		break;
+	case 1:
+	default:
+		tracer = new RayTracer("./files/SphereScene.sdl", 4, 1);
+	}
+	std::cout<<argc<<endl;
+	std::cout<<argv[0]<<endl;
 	//RayTracer* tracer = new RayTracer("./files/MirrorBoxScene.sdl", 2, 1);
 	//RayTracer* tracer = new RayTracer("./files/MirrorBoxScene.sdl", 4, 1);
 	//RayTracer* tracer = new RayTracer("./files/MirrorBoxScene.sdl", 10, 1);
@@ -134,7 +158,7 @@ int main(int argc, char** argv) {
 	//RayTracer* tracer = new RayTracer("./files/RefractionScene.sdl", 4, 1);
 	//RayTracer* tracer = new RayTracer("./files/RefractionTestScene.sdl", 4, 1);
 	//RayTracer* tracer = new RayTracer("./files/ToothbrushScene.sdl", 4, 1);
-	RayTracer* tracer = new RayTracer("./files/SphereScene.sdl", 4, 1);
+	//RayTracer* tracer = new RayTracer("./files/SphereScene.sdl", 4, 1);
 	//RayTracer* tracer = new RayTracer("./files/ConeScene.sdl", 4, 1);
 	//RayTracer* tracer = new RayTracer("./files/CylinderScene.sdl", 4, 1);
 	//RayTracer* tracer = new RayTracer("./files/BoxScene.sdl");
@@ -148,6 +172,7 @@ int main(int argc, char** argv) {
 	//RayTracer* tracer = new RayTracer("./files/MultBoolTest.sdl", 4, 1);
 	//RayTracer* tracer = new RayTracer("./files/Dice.sdl", 4, 1);
 	//RayTracer* tracer = new RayTracer("./files/Desk.sdl", 4, 1);
+	//RayTracer* tracer = new RayTracer("./files/Cube.sdl", 4, 1);
 
 	delete tracer;
 	return 0;
