@@ -38,7 +38,7 @@ void RayTracer::init(string fileName, int recursion, int blockSize){
 	//Hand scene to tracer
 	tracer = RayTracer::scene->getTracer();
 
-	scene->startTrace(matrix);
+	thread myThread = thread([scene]{scene->startTrace(matrix);});
 
 	glutInitWindowPosition(50, 50); // Position the window's initial top-left corner
 	glutInitWindowSize(WIDTH, HEIGHT);   // Set the window's initial width & height
@@ -60,6 +60,7 @@ void RayTracer::init(string fileName, int recursion, int blockSize){
 	glutDisplayFunc(display); // Register display callback handler for window re-paint
 	glutKeyboardFunc(keyboard);
 	glutReshapeFunc(reshape);
+	glutTimerFunc(targetTime, framerateControl, 0);
 	glutMainLoop();           // Enter the infinitely event-processing loop
 
 
@@ -77,6 +78,11 @@ void RayTracer::init(string fileName, int recursion, int blockSize){
 
 }
 
+void RayTracer::framerateControl(int t){
+	glutPostRedisplay();
+	glutTimerFunc(targetTime, framerateControl, 0);
+}
+
 /* Handler for window-repaint event. Call back when the window first appears and
    whenever the window needs to be re-painted. */
 void RayTracer::display() {
@@ -85,7 +91,7 @@ void RayTracer::display() {
 	glBegin(GL_POINTS);
 	for(int i = 0; i < WIDTH; i++){
 		for(int j = 0; j < HEIGHT; j++){
-			glColor3d((float)matrix->p2DArray[i][j][0], (float)matrix->p2DArray[i][j][1], (float)matrix->p2DArray[i][j][2]);
+			glColor3d(matrix->p2DArray[i][j][0], matrix->p2DArray[i][j][1], matrix->p2DArray[i][j][2]);
 			glVertex2f(i, j);
 		}
 	}
@@ -128,7 +134,7 @@ int main(int argc, char** argv) {
 	//RayTracer* tracer = new RayTracer("./files/RefractionScene.sdl", 4, 1);
 	//RayTracer* tracer = new RayTracer("./files/RefractionTestScene.sdl", 4, 1);
 	//RayTracer* tracer = new RayTracer("./files/ToothbrushScene.sdl", 4, 1);
-	//RayTracer* tracer = new RayTracer("./files/SphereScene.sdl", 4, 1);
+	RayTracer* tracer = new RayTracer("./files/SphereScene.sdl", 4, 1);
 	//RayTracer* tracer = new RayTracer("./files/ConeScene.sdl", 4, 1);
 	//RayTracer* tracer = new RayTracer("./files/CylinderScene.sdl", 4, 1);
 	//RayTracer* tracer = new RayTracer("./files/BoxScene.sdl");
@@ -141,7 +147,7 @@ int main(int argc, char** argv) {
 	//RayTracer* tracer = new RayTracer("./files/InsideBallTest.sdl", 4, 1);
 	//RayTracer* tracer = new RayTracer("./files/MultBoolTest.sdl", 4, 1);
 	//RayTracer* tracer = new RayTracer("./files/Dice.sdl", 4, 1);
-	RayTracer* tracer = new RayTracer("./files/Desk.sdl", 4, 1);
+	//RayTracer* tracer = new RayTracer("./files/Desk.sdl", 4, 1);
 
 	delete tracer;
 	return 0;

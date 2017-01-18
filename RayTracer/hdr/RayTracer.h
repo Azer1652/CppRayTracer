@@ -9,6 +9,7 @@
 #define RAYTRACER_H_
 
 #include <string>
+#include <thread>
 
 class Tracer;
 class Scene;
@@ -31,6 +32,7 @@ class RayTracer{
 
 	private:
 		void init(std::string, int, int);
+		static void framerateControl(int);
 		static void display();
 		static void reshape(int, int);
 		static void keyboard(unsigned char, int, int);
@@ -39,6 +41,8 @@ class RayTracer{
 		//MyGLEventListener EL;
 		//MyKeyListener KL;
 		Tracer* tracer = NULL;
+
+		static const unsigned int targetTime = (1/30.0)*1000;
 
 };
 
