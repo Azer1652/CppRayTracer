@@ -60,7 +60,7 @@ void Cylinder::hit(Ray* r, vector<Hit*>* hitData){
 
 
 		//bottom cap
-		//z2 > min een z1 < min or reversed
+		//z2 > min and z1 < min or reversed
 		if((b[2] + t2*a[2] > 0 && b[2] + t1*a[2] < 0) || (b[2] + t1*a[2] > 0 && b[2] + t2*a[2] < 0)){
 			double t3 = (0 - b[2])/a[2];
 			if(t3 > 0){

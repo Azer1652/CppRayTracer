@@ -39,7 +39,8 @@ public:
 	double* getCamU();
 	double* getCamV();
 
-	int numThreads = 4;
+	//unsigned numThreads = 1;
+	unsigned numThreads = std::thread::hardware_concurrency();
 private:
 
 	Scene* scene;

@@ -39,17 +39,20 @@ void Parser::parseFile(string fileName){
 	line++;
 	while (infile && ((sCurrentLine.find("]")) == string::npos)){
 		if(sCurrentLine.find("OBJECTS[") != string::npos){
-			cout << "\"OBJECTS\" detected, parsing..." << endl;
+			if(RayTracer::debug)
+				cout << "\"OBJECTS\" detected, parsing..." << endl;
 			readObjects();
 		}
 		getline(infile, sCurrentLine);
 	    line++;
 	}
-	cout << "END PARSING" << endl;
+	if(RayTracer::debug)
+		cout << "END PARSING" << endl;
 }
 
 void Parser::readObjects(){
-	cout << "Reading Objects." << endl;
+	if(RayTracer::debug)
+		cout << "Reading Objects." << endl;
 	getline(infile, sCurrentLine);
 	line++;
 	while((infile && ((sCurrentLine.find("]")) == string::npos))){
@@ -75,7 +78,8 @@ void Parser::readObjects(){
 }
 
 void Parser::readCamera(){
-	cout << "Creating Camera." << endl;
+	if(RayTracer::debug)
+		cout << "Creating Camera." << endl;
 	getline(infile, sCurrentLine);
 	line++;
 	while((infile && ((sCurrentLine.find("}")) == string::npos))){
@@ -92,7 +96,8 @@ void Parser::readCamera(){
 }
 
 void Parser::readLight(){
-	cout << "Creating Light." << endl;
+	if(RayTracer::debug)
+		cout << "Creating Light." << endl;
 	Light* light = new Light();
 	getline(infile, sCurrentLine);
 	line++;
@@ -109,7 +114,8 @@ void Parser::readLight(){
 }
 
 BoolObj* Parser::readBool(){
-	cout << "Reading BOOL." << endl;
+	if(RayTracer::debug)
+		cout << "Reading BOOL." << endl;
 	GeoObj* obj[2];
 	int i = 0;
 	getline(infile, sCurrentLine);
@@ -117,13 +123,16 @@ BoolObj* Parser::readBool(){
 	int operation = ADD;
 	if(sCurrentLine.find("SUBSTRACT") != string::npos){
 		operation = SUBSTRACT;
-		cout << "->SUBSTRACTING." << endl;
+		if(RayTracer::debug)
+			cout << "->SUBSTRACTING." << endl;
 	}else if(sCurrentLine.find("MULTIPLY") != string::npos){
 		operation = MULTIPLY;
-		cout << "->MULTIPLYING." << endl;
+		if(RayTracer::debug)
+			cout << "->MULTIPLYING." << endl;
 	}else{
 		operation = ADD;
-		cout << "->ADDING." << endl;
+		if(RayTracer::debug)
+			cout << "->ADDING." << endl;
 	}
 	while((infile && ((sCurrentLine.find(">")) == string::npos))){
 		if(sCurrentLine.find("\tBAR{") != string::npos){
@@ -151,7 +160,8 @@ BoolObj* Parser::readBool(){
 }
 
 Bar* Parser::readBar(){
-	cout << "Creating Bar." << endl;
+	if(RayTracer::debug)
+		cout << "Creating Bar." << endl;
 	getline(infile, sCurrentLine);
 	line++;
 	Bar* bar = new Bar();
@@ -174,7 +184,8 @@ Bar* Parser::readBar(){
 }
 
 Sphere* Parser::readSphere(){
-	cout << "Creating Sphere." << endl;
+	if(RayTracer::debug)
+		cout << "Creating Sphere." << endl;
 	getline(infile, sCurrentLine);
 	line++;
 	Sphere* sphere = new Sphere();
@@ -197,7 +208,8 @@ Sphere* Parser::readSphere(){
 }
 
 Cone* Parser::readCone(){
-	cout << "Creating Cone." << endl;
+	if(RayTracer::debug)
+		cout << "Creating Cone." << endl;
 	getline(infile, sCurrentLine);
 	line++;
 	Cone* cone = new Cone();
@@ -220,7 +232,8 @@ Cone* Parser::readCone(){
 }
 
 Cylinder* Parser::readCylinder(){
-	cout << "Creating Cone." << endl;
+	if(RayTracer::debug)
+		cout << "Creating Cone." << endl;
 	getline(infile, sCurrentLine);
 	line++;
 	Cylinder* cylinder = new Cylinder();
@@ -306,7 +319,8 @@ double* Parser::readColor(){
 }
 
 Material* Parser::readMat(){
-	cout << "Creating material." << endl;
+	if(RayTracer::debug)
+		cout << "Creating material." << endl;
 	getline(infile, sCurrentLine);
 	line++;
 	Material* mat = new Material();
@@ -320,15 +334,18 @@ Material* Parser::readMat(){
 	mat->setEmissive(emissive);
 	if((infile && ((sCurrentLine.find(")")) == string::npos))){
 		if(sCurrentLine.find("GLASS;") != string::npos){
-			cout << "Glass Detected" <<endl;
+			if(RayTracer::debug)
+				cout << "Glass Detected" <<endl;
 			delete mat;
 			mat = new Glass();
 		}else if(sCurrentLine.find("WALL;") != string::npos){
-			cout << "Wall Detected" <<endl;
+			if(RayTracer::debug)
+				cout << "Wall Detected" <<endl;
 			delete mat;
 			mat = new Wall();
 		}else if(sCurrentLine.find("MIRROR;") != string::npos){
-			cout << "Mirror Detected" <<endl;
+			if(RayTracer::debug)
+				cout << "Mirror Detected" <<endl;
 			delete mat;
 			mat = new Mirror();
 		}/*else if(sCurrentLine.find("\t\t\tCHECKERS;") != string::npos){

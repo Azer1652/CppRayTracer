@@ -19,13 +19,14 @@ Scene* RayTracer::scene;
 ViewMatrix* RayTracer::matrix = new ViewMatrix();
 bool RayTracer::drawn = false;
 bool RayTracer::reallyDrawn = false;
+bool RayTracer::debug = false;
 
 RayTracer::RayTracer(string fileName){
-	init(fileName, 4, 1);
+	init(fileName, 4, 1, true);
 }
 
-RayTracer::RayTracer(string fileName, int recursion, int blockSize){
-	init(fileName, recursion, blockSize);
+RayTracer::RayTracer(string fileName, int recursion, int blockSize, bool shadows){
+	init(fileName, recursion, blockSize, shadows);
 }
 
 RayTracer::~RayTracer(){
@@ -33,9 +34,9 @@ RayTracer::~RayTracer(){
 	delete scene;
 }
 
-void RayTracer::init(string fileName, int recursion, int blockSize){
+void RayTracer::init(string fileName, int recursion, int blockSize, bool shadows){
 	//generate scene
-	scene = new Scene(fileName, recursion, blockSize);
+	scene = new Scene(fileName, recursion, blockSize, shadows);
 
 	//Hand scene to tracer
 	tracer = RayTracer::scene->getTracer();
@@ -134,45 +135,78 @@ int main(int argc, char** argv) {
 	glutInit(&argc, argv);	// Initialize GLUT
 	RayTracer* tracer;
 
-	switch(argc){
-	case 2:
-		tracer = new RayTracer(argv[1], 4, 1);
-		break;
-	case 3:
-		tracer = new RayTracer(argv[1], atof(argv[2]), 1);
-		break;
-	case 4:
-		tracer = new RayTracer(argv[1], atof(argv[2]), atof(argv[3]));
-		break;
-	case 1:
-	default:
-		tracer = new RayTracer("./files/SphereScene.sdl", 4, 1);
+	string fileName = "./files/SphereScene.sdl";
+	int depth = 4;
+	int blockSize = 1;
+	bool shadows = true;
+	int state = DEBUG;
+	for(int i = 1; i < argc; i++){
+		switch(state){
+		case DEBUG:{
+			std::string str(argv[i]);
+			if(str.find("-d") != string::npos){
+				RayTracer::debug = true;
+				state=FILENAME;
+			}else{
+				fileName=argv[i];
+				state=DEPTH;
+			}
+			break;
+		}
+		case FILENAME:{
+			fileName=argv[i];
+			state=DEPTH;
+			break;
+		}
+		case DEPTH:{
+			depth = atof(argv[i]);
+			state = BLOCKSIZE;
+			break;
+		}
+		case BLOCKSIZE:{
+			blockSize = atof(argv[i]);
+			state=SHADOWS;
+			break;
+		}
+		case SHADOWS:{
+			std::string str(argv[i]);
+			if(str.find("false") != string::npos){
+				shadows = false;
+			}
+			state++;
+			break;
+		}
+		default:
+			break;
+		}
 	}
-	std::cout<<argc<<endl;
-	std::cout<<argv[0]<<endl;
-	//RayTracer* tracer = new RayTracer("./files/MirrorBoxScene.sdl", 2, 1);
-	//RayTracer* tracer = new RayTracer("./files/MirrorBoxScene.sdl", 4, 1);
-	//RayTracer* tracer = new RayTracer("./files/MirrorBoxScene.sdl", 10, 1);
-	//RayTracer* tracer = new RayTracer("./files/MirrorBoxScene.sdl", 8, 1);
-	//RayTracer* tracer = new RayTracer("./files/GlassSphereScene.sdl", 4, 1);
-	//RayTracer* tracer = new RayTracer("./files/RefractionScene.sdl", 4, 1);
-	//RayTracer* tracer = new RayTracer("./files/RefractionTestScene.sdl", 4, 1);
-	//RayTracer* tracer = new RayTracer("./files/ToothbrushScene.sdl", 4, 1);
-	//RayTracer* tracer = new RayTracer("./files/SphereScene.sdl", 4, 1);
-	//RayTracer* tracer = new RayTracer("./files/ConeScene.sdl", 4, 1);
-	//RayTracer* tracer = new RayTracer("./files/CylinderScene.sdl", 4, 1);
-	//RayTracer* tracer = new RayTracer("./files/BoxScene.sdl");
-	//RayTracer* tracer = new RayTracer("./files/ConeScene.sdl");
-	//RayTracer* tracer = new RayTracer("./files/JanSphereScene.sdl", 4, 1);
-	//RayTracer* tracer = new RayTracer("./files/BoolObjTest.sdl", 4, 1);
-	//RayTracer* tracer = new RayTracer("./files/BoolObjCubeTest.sdl", 4, 1);
-	//RayTracer* tracer = new RayTracer("./files/ComplexBoolObjTest.sdl", 4, 1);
-	//RayTracer* tracer = new RayTracer("./files/BallInSubstractedCube.sdl", 4, 1);
-	//RayTracer* tracer = new RayTracer("./files/InsideBallTest.sdl", 4, 1);
-	//RayTracer* tracer = new RayTracer("./files/MultBoolTest.sdl", 4, 1);
-	//RayTracer* tracer = new RayTracer("./files/Dice.sdl", 4, 1);
-	//RayTracer* tracer = new RayTracer("./files/Desk.sdl", 4, 1);
-	//RayTracer* tracer = new RayTracer("./files/Cube.sdl", 4, 1);
+
+	tracer = new RayTracer(fileName, depth, blockSize, shadows);
+
+	//tracer = new RayTracer("./files/MirrorBoxScene.sdl", 2, 1, true);
+	//tracer = new RayTracer("./files/MirrorBoxScene.sdl", 4, 1, true);
+	//tracer = new RayTracer("./files/MirrorBoxScene.sdl", 10, 1, true);
+	//tracer = new RayTracer("./files/MirrorBoxScene.sdl", 8, 1, true);
+	//tracer = new RayTracer("./files/GlassSphereScene.sdl", 4, 1, true);
+	//tracer = new RayTracer("./files/RefractionScene.sdl", 4, 1, true);
+	//tracer = new RayTracer("./files/RefractionTestScene.sdl", 4, 1, true);
+	//tracer = new RayTracer("./files/ToothbrushScene.sdl", 4, 1, true);
+	//tracer = new RayTracer("./files/SphereScene.sdl", 4, 1, true);
+	//tracer = new RayTracer("./files/ConeScene.sdl", 4, 1, true);
+	//tracer = new RayTracer("./files/CylinderScene.sdl", 4, 1, true);
+	//tracer = new RayTracer("./files/BoxScene.sdl");
+	//tracer = new RayTracer("./files/ConeScene.sdl");
+	//tracer = new RayTracer("./files/JanSphereScene.sdl", 4, 1, true);
+	//tracer = new RayTracer("./files/BoolObjTest.sdl", 4, 1, true);
+	//tracer = new RayTracer("./files/BoolObjCubeTest.sdl", 4, 1, true);
+	//tracer = new RayTracer("./files/ComplexBoolObjTest.sdl", 4, 1, true);
+	//tracer = new RayTracer("./files/BallInSubstractedCube.sdl", 4, 1, true);
+	//tracer = new RayTracer("./files/InsideBallTest.sdl", 4, 1, true);
+	//tracer = new RayTracer("./files/MultBoolTest.sdl", 4, 1, true);
+	//tracer = new RayTracer("./files/Dice.sdl", 4, 1, true);
+	//tracer = new RayTracer("./files/Desk.sdl", 4, 1, true);
+	//tracer = new RayTracer("./files/Cube.sdl", 4, 1, true);
+	//tracer = new RayTracer("./files/BoolObjInMirrorBox.sdl", 100, 1, true);
 
 	delete tracer;
 	return 0;

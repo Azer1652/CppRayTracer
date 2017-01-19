@@ -22,6 +22,9 @@ public:
 
 	void hit(Ray*, std::vector<Hit*>*);
 	bool hitShadow(Ray*);
+
+private:
+	double* formNormal(double*);
 };
 
 #endif /* SCENE_CONE_H_ */

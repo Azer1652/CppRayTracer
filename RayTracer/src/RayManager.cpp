@@ -67,8 +67,10 @@ void RayManager::run(){
 	}
 	while(i<div2){
 		while(j<HEIGHT){
-			if(i == 1 && j == 400)
-				std::cout << "Break;" << std::endl;
+			if(RayTracer::debug){
+				if(i == 400 && j == 350)
+					std::cout << "Break;" << std::endl;
+			}
 			double x = -tracer->getCamW() + (i) * blockWidth;
 			double y = -tracer->getCamH() + (j) * blockHeight;
 			//IMPROVE Possible speedup is function result saved
@@ -97,7 +99,8 @@ void RayManager::run(){
 			j+=blockSize;
 		}
 		j = 0;
-		std::cout << "Process: " << i << " out of " << div2 << "." << std::endl;
+		if(RayTracer::debug)
+			std::cout << "Process: " << i << " out of " << div2 << "." << std::endl;
 		i+=blockSize;
 	}
 

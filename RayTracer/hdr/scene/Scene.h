@@ -24,7 +24,7 @@ using namespace std;
 
 class Scene {
 public:
-	Scene(string, int, int);
+	Scene(string, int, int, bool);
 	virtual ~Scene();
 
 	void startTrace(ViewMatrix*);

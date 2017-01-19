@@ -18,10 +18,18 @@ class ViewMatrix;
 static int WIDTH = 800;
 static int HEIGHT = 800;
 
+enum{
+	DEBUG,
+	FILENAME,
+	DEPTH,
+	BLOCKSIZE,
+	SHADOWS
+};
+
 class RayTracer{
 	public:
 		RayTracer(std::string);
-		RayTracer(std::string, int, int);
+		RayTracer(std::string, int, int, bool);
 		virtual ~RayTracer();
 
 		//Speed of Camera Movement
@@ -31,9 +39,10 @@ class RayTracer{
 		static ViewMatrix* matrix;
 		static bool drawn;
 		static bool reallyDrawn;
+		static bool debug;
 
 	private:
-		void init(std::string, int, int);
+		void init(std::string, int, int, bool);
 		static void framerateControl(int);
 		static void display();
 		static void reshape(int, int);

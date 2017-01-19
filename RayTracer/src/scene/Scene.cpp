@@ -15,17 +15,20 @@
 
 #include <stdio.h>
 
-Scene::Scene(string fileName, int recursion, int blockSize){
+Scene::Scene(string fileName, int recursion, int blockSize, bool shadows){
 	this->tracer = new Tracer(this);
 	cam = new Camera();
 	parser = new Parser(this, fileName);
 	ambient = new double[3]{0.8,0.8,0.8};
 	this->recursion=recursion;
 	this->blockSize=blockSize;
-	cout << "numObj: " << objects.size() << endl;
-	cout << "numLights: " << lights.size() << endl;
-	cout << "cam loc: " << cam->pos[0] << ", " << cam->pos[1] << ", " << cam->pos[2] << endl;
-	cout << "cam lookAt: " << cam->lookAt[0] << ", " << cam->lookAt[1] << ", " << cam->lookAt[2] << endl;
+	this->shadows=shadows;
+	if(RayTracer::debug){
+		cout << "numObj: " << objects.size() << endl;
+		cout << "numLights: " << lights.size() << endl;
+		cout << "cam loc: " << cam->pos[0] << ", " << cam->pos[1] << ", " << cam->pos[2] << endl;
+		cout << "cam lookAt: " << cam->lookAt[0] << ", " << cam->lookAt[1] << ", " << cam->lookAt[2] << endl;
+	}
 }
 
 Scene::~Scene() {

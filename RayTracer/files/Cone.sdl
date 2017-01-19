@@ -1,0 +1,60 @@
+OBJECTS[
+	CAMERA{
+		POSITION(
+			x=0;
+			y=0;
+			z=6;
+		)
+		
+		LOOKAT(
+			x=0;
+			y=0;
+			z=0;
+		)
+		
+		UP(
+			x=0;
+			y=1;
+			z=0;
+		)
+	}
+	
+	LIGHT{
+		POSITION(
+			x=0;
+			y=0;
+			z=6;
+		)
+		COLOR(
+			r=.9;
+			g=.9;
+			b=.9;
+		)
+	}
+
+	CONE{
+		POSITION(
+			x=0;
+			y=0;
+			z=0;
+		)
+		DIMENSIONS(
+			a=1;
+			b=1;
+			c=1;
+		)
+		ROTATION(
+			a=90;
+			b=0;
+			c=0;
+		)
+		MATERIAL(
+			W/ALL;
+			ambientR=0.5;
+			ambientG=0.5;
+			ambientB=0.5;
+			diffuseR=.8;
+			diffuseG=.8;
+			diffuseB=.8;
+		)
+	}

@@ -24,6 +24,9 @@ Tracer::Tracer() {
 */
 
 Tracer::Tracer(Scene* scn){
+	if(numThreads==0){
+		numThreads = 1;
+	}
 	this->scene = scn;
 
 	x=0;
@@ -43,9 +46,10 @@ void Tracer::start(int recursion, int blockSize, bool shadows, ViewMatrix* matri
 	//Singlethreaded approach for simplification
 	mans.push_back(new RayManager(this, recursion, blockSize, shadows, matrix));
 	mans[0]->run();
-	 */
+	*/
 
-	//8 threads
+
+	//threads
 	int div = 0;
 	int div2 = divisions;
 	thread myThreads[numThreads];
@@ -68,10 +72,12 @@ void Tracer::start(int recursion, int blockSize, bool shadows, ViewMatrix* matri
 		delete man;
 	mans.clear();
 
+
 	RayTracer::drawn = true;
 	clock_t end = clock();
 	double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
-	cout << "Elapsed time: " << elapsed_secs << " sec." << endl;
+	if(RayTracer::debug)
+		cout << "Elapsed time: " << elapsed_secs << " sec." << endl;
 }
 
 Scene* Tracer::getScene(){

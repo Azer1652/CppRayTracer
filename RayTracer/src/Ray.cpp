@@ -164,6 +164,9 @@ void Ray::calculate(Hit* a){
 			diffuse[2] = b->getMaterial()->getTextureMatrix()->array[x][y][2];
 		}
 	}else{
+		emissive[0] = b->getMaterial()->getEmissive()[0];
+		emissive[1] = b->getMaterial()->getEmissive()[1];
+		emissive[2] = b->getMaterial()->getEmissive()[2];
 		diffuse[0] = b->getMaterial()->getDiffuse()[0];
 		diffuse[1] = b->getMaterial()->getDiffuse()[1];
 		diffuse[2] = b->getMaterial()->getDiffuse()[2];
@@ -190,6 +193,7 @@ void Ray::calculate(Hit* a){
 	double* normalN;
 	normalN = Lib::xfrmNormal(b->getTransform(), a->getNormal());
 	Lib::normalize(normalN);
+
 	double v[] {-this->direction[0], -this->direction[1], -this->direction[2]};
 	Lib::normalize(v);
 	for(Light* light : *lights){
@@ -268,6 +272,7 @@ void Ray::calculate(Hit* a){
 			//Get normalized normal
 			double* normal;
 			normal = Lib::xfrmNormal(b->getTransform(), a->getNormal());
+			Lib::normalize(normal);
 			//calculate new ray direction
 			Ray* reflectedRay = new Ray(tracer);
 			reflectedRay->setLocation(a->getPosition()[0]-refEps*this->getDirection()[0],
@@ -278,6 +283,7 @@ void Ray::calculate(Hit* a){
 									this->direction[2]-2*(Lib::dot3D(this->direction,normal))*normal[2]);
 			reflectedRay->setMaxNumBounces(maxNumBounces - 1);
 			double* reflectedColor = new double[3] {0,0,0};
+			reflectedRay->setShadows(this->shadows);
 			reflectedRay->run(reflectedColor);
 			double* temp = new double[3] {0,0,0};
 			Lib::dot3DArr(reflectedColor, b->getMaterial()->getReflectivity(), temp);
@@ -298,6 +304,7 @@ void Ray::calculate(Hit* a){
 			//Get normalized normal
 			double* normal;
 			normal = Lib::xfrmNormal(b->getTransform(), a->getNormal());
+			Lib::normalize(normal);
 			//calculate new ray direction
 			Ray* refractedRay = new Ray(tracer);
 			if(a->getEntering()){
@@ -321,6 +328,7 @@ void Ray::calculate(Hit* a){
 										n*dir[2]+(n*(Lib::dot3D(normal, dir))-c2)*normal[2]);
 				refractedRay->setMaxNumBounces(maxNumBounces - 1);
 				double* refractedColor = new double[3] {0,0,0};
+				refractedRay->setShadows(this->shadows);
 				refractedRay->run(refractedColor);
 				double* temp = new double[3] {0,0,0};
 				Lib::dot3DArr(refractedColor, b->getMaterial()->getTransparency(), temp);
