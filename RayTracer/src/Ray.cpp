@@ -171,15 +171,7 @@ void Ray::calculate(Hit* a){
 		diffuse[1] = b->getMaterial()->getDiffuse()[1];
 		diffuse[2] = b->getMaterial()->getDiffuse()[2];
 	}
-	if(b->getMaterial()->getTexture() == 1){
-		int pos[3] = {a->getPosition()[0]*4, a->getPosition()[1]*4, a->getPosition()[2]*4};
-		if(pos[0] % 2 == 0 && pos[2] % 2 == 0 && pos[1] %2 == 0){
-			//Keep original color
-		}
-		else{
-			Lib::dot3DArr(color, 0.4, color);
-		}
-	}
+
 	color[0] = emissive[0];
 	color[1] = emissive[1];
 	color[2] = emissive[2];
@@ -260,6 +252,16 @@ void Ray::calculate(Hit* a){
 				Lib::multiply(specColor, phong);
 				Lib::add(color, specColor);
 			}
+		}
+	}
+
+	if(b->getMaterial()->getTexture() == 1){
+		int pos[3] = {a->getPosition()[0]*4, a->getPosition()[1]*4, a->getPosition()[2]*4};
+		if(pos[0] % 2 == 0 && pos[2] % 2 == 0 && pos[1] %2 == 0){
+			//Keep original color
+		}
+		else{
+			Lib::dot3DArr(color, 0.4, color);
 		}
 	}
 

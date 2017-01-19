@@ -1,0 +1,160 @@
+OBJECTS[
+	CAMERA{
+		POSITION(
+			x=5;
+			y=2;
+			z=0;
+		)
+		
+		LOOKAT(
+			x=0;
+			y=2;
+			z=0;
+		)
+		
+		UP(
+			x=0;
+			y=1;
+			z=0;
+		)
+	}
+	
+	LIGHT{
+		POSITION(
+			x=5;
+			y=2;
+			z=0;
+		)
+		
+		COLOR(
+			r=.4;
+			g=.4;
+			b=.4;
+		)
+	}
+	
+	LIGHT{
+		POSITION(
+			x=5;
+			y=2;
+			z=-3;
+		)
+		
+		COLOR(
+			r=.4;
+			g=.4;
+			b=.4;
+		)
+	}
+	
+	LIGHT{
+		POSITION(
+			x=5;
+			y=2;
+			z=3;
+		)
+		
+		COLOR(
+			r=.4;
+			g=.4;
+			b=.4;
+		)
+	}
+
+	CONE{
+		DIMENSIONS(
+			a=1;
+			b=3;
+			c=1;
+		)
+		
+		ROTATION(
+			a=-90;
+			b=0;
+			c=0;
+		)
+		
+		POSITION(
+			x=0;
+			y=0;
+			z=0;
+		)
+		
+		MATERIAL(
+			texture=IceCone.bmp
+		)
+	}
+	
+	SPHERE{
+		DIMENSIONS(
+			a=.8;
+			b=.8;
+			c=.8;
+		)
+		
+		ROTATION(
+			a=0;
+			b=0;
+			c=0;
+		)
+		
+		POSITION(
+			x=0;
+			y=3.5;
+			z=-.5;
+		)
+		
+		MATERIAL(
+			texture=IceBall.bmp
+		)
+	}
+	
+	SPHERE{
+		DIMENSIONS(
+			a=.8;
+			b=.8;
+			c=.8;
+		)
+		
+		ROTATION(
+			a=0;
+			b=0;
+			c=0;
+		)
+		
+		POSITION(
+			x=0;
+			y=3.5;
+			z=0.5;
+		)
+		
+		MATERIAL(
+			texture=IceBall2.bmp
+		)
+	}
+	
+	BAR{
+		DIMENSIONS(
+			a=0.01;
+			b=9;
+			c=11;
+		)
+		
+		ROTATION(
+			a=0;
+			b=0;
+			c=0;
+		)
+		
+		POSITION(
+			x=-3;
+			y=2;
+			z=0;
+		)
+		
+		MATERIAL(
+			texture=Truck.bmp
+		)
+	}
+	
+	

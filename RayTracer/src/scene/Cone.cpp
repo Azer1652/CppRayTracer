@@ -9,6 +9,7 @@
 #include "../../hdr/Lib.h"
 #include "../../hdr/Ray.h"
 #include "../../hdr/Hit.h"
+#include "../../hdr/scene/materials/Material.h"
 
 #include <cmath>
 
@@ -56,44 +57,6 @@ void Cone::hit(Ray* r, vector<Hit*>* hitData){
 		t1 = (-B - disc_root)/(2*A);
 		t2 = (-B + disc_root)/(2*A);
 
-		/*
-		//bottom cap
-		//z2 > min een z1 < min or reversed
-		if((b[2] + t2*a[2] > 0 && b[2] + t1*a[2] < 0) || (b[2] + t1*a[2] > 0 && b[2] + t2*a[2] < 0)){
-			double t3 = (0 - b[2])/a[2];
-			if(t3 > 0){
-				Hit* hit = new Hit();
-				hit->setPosition(new double[3]{r->getLocation()[0]+r->getDirection()[0]*t3,
-											r->getLocation()[1]+r->getDirection()[1]*t3,
-											r->getLocation()[2]+r->getDirection()[2]*t3});
-				hit->setTime(t3);
-				hit->setObj(this);
-				//ENTERING + NORMAL
-				if(t2>t1){
-					if(ray->getLocation()[2]+ray->getDirection()[2]*t2 < 0){
-						hit->setEntering(false);
-						hit->setNormal(new double[3]{0,0,1});
-					}else{
-						hit->setEntering(true);
-						hit->setNormal(new double[3]{0,0,-1});
-					}
-				}else{
-					if(ray->getLocation()[2]+ray->getDirection()[2]*t1 < 0){
-						hit->setEntering(false);
-						hit->setNormal(new double[3]{0,0,1});
-					}else{
-						hit->setEntering(true);
-						hit->setNormal(new double[3]{0,0,-1});
-					}
-				}
-
-				//System.out.println("normal: " + hit.getNormal()[0] + " " + hit.getNormal()[1] + " " + hit.getNormal()[2]);
-				//extra hitData
-				hitData->push_back(hit);
-			}
-		}
-		*/
-
 		//System.out.println("t1: " + t1 + ", t2: " + t2);
 		if(t2 > 0.00001){
 			//System.out.println("Positive Hit");
@@ -109,14 +72,20 @@ void Cone::hit(Ray* r, vector<Hit*>* hitData){
 					double V[2]{ray->getLocation()[0]+ray->getDirection()[0]*t2,
 								ray->getLocation()[1]+ray->getDirection()[1]*t2};
 					double* normal = formNormal(V);
+					normal[2] = -normal[2];
 					hit->setNormal(normal);
 				}else{
 					hit->setEntering(false);
 					double V[2]{-(ray->getLocation()[0]+ray->getDirection()[0]*t2),
 								-(ray->getLocation()[1]+ray->getDirection()[1]*t2)};
 					double* normal = formNormal(V);
-					normal[2] = -normal[2];
+
 					hit->setNormal(normal);
+				}
+				if(mat->textureFromFile){
+					hit->originalPosition[0] = ray->getLocation()[0]+ray->getDirection()[0]*t2;
+					hit->originalPosition[1] = ray->getLocation()[1]+ray->getDirection()[1]*t2;
+					hit->originalPosition[2] = ray->getLocation()[2]+ray->getDirection()[2]*t2;
 				}
 
 				//System.out.println("normal: " + hit.getNormal()[0] + " " + hit.getNormal()[1] + " " + hit.getNormal()[2]);
@@ -140,14 +109,20 @@ void Cone::hit(Ray* r, vector<Hit*>* hitData){
 					double V[2]{ray->getLocation()[0]+ray->getDirection()[0]*t1,
 								ray->getLocation()[1]+ray->getDirection()[1]*t1};
 					double* normal = formNormal(V);
+					normal[2] = -normal[2];
 					hit->setNormal(normal);
 				}else{
 					hit->setEntering(false);
 					double V[2]{-(ray->getLocation()[0]+ray->getDirection()[0]*t1),
 								-(ray->getLocation()[1]+ray->getDirection()[1]*t1)};
 					double* normal = formNormal(V);
-					normal[2] = -normal[2];
+
 					hit->setNormal(normal);
+				}
+				if(mat->textureFromFile){
+					hit->originalPosition[0] = ray->getLocation()[0]+ray->getDirection()[0]*t1;
+					hit->originalPosition[1] = ray->getLocation()[1]+ray->getDirection()[1]*t1;
+					hit->originalPosition[2] = ray->getLocation()[2]+ray->getDirection()[2]*t1;
 				}
 
 				//System.out.println("normal: " + hit.getNormal()[0] + " " + hit.getNormal()[1] + " " + hit.getNormal()[2]);
@@ -218,7 +193,7 @@ double* Cone::formNormal(double* V){
 	V[1] /= m;
 	normal[0]=V[0];
 	normal[1]=V[1];
-	normal[2]=-1;
+	normal[2]=1;
 	return normal;
 }
 

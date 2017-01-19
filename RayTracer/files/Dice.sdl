@@ -83,12 +83,12 @@ BOOL<
 				POSITION(
 					x=0;
 					y=0;
-					z=-2.5;
+					z=-1;
 				)
 				DIMENSIONS(
 					a=.7;
 					b=.7;
-					c=5;
+					c=3;
 				)
 				MATERIAL(
 					WALL;
@@ -100,12 +100,12 @@ BOOL<
 			CYLINDER{
 				POSITION(
 					x=0;
-					y=-2.5;
+					y=-1;
 					z=0;
 				)
 				DIMENSIONS(
 					a=.7;
-					b=5;
+					b=3;
 					c=.7;
 				)
 				ROTATION(
@@ -123,12 +123,12 @@ BOOL<
 		>
 		CYLINDER{
 			POSITION(
-				x=-2.5;
+				x=-1;
 				y=0;
 				z=0;
 			)
 			DIMENSIONS(
-				a=5;
+				a=3;
 				b=.7;
 				c=.7;
 			)
@@ -146,5 +146,24 @@ BOOL<
 			)
 		}
 	>
-
 >
+
+	BAR{
+		POSITION(
+			x=0;
+			y=-10;
+			z=0;
+		)
+		DIMENSIONS(
+			a=100000000;
+			b=0.1;
+			c=100000000;
+		)
+		MATERIAL(
+			WALL;
+			diffuseB=.5;
+			diffuseR=.5;
+			diffuseG=.5;
+		)
+	}
+]

@@ -1,0 +1,93 @@
+OBJECTS[
+	CAMERA{
+		POSITION(
+			x=10;
+			y=5;
+			z=3;
+		)
+		
+		LOOKAT(
+			x=7.5;
+			y=5;
+			z=0;
+		)
+		
+		UP(
+			x=0;
+			y=1;
+			z=0;
+		)
+	}
+	
+	LIGHT{
+		POSITION(
+			x=10;
+			y=5;
+			z=0;
+		)
+		
+		COLOR(
+			r=.8;
+			g=.8;
+			b=0.8;
+		)
+	}
+	
+	BOOL<
+		SUBSTRACT:
+		BOOL<
+			SUBSTRACT:
+			BAR{
+				DIMENSIONS(
+					a=1;
+					b=1;
+					c=1;
+				)
+				
+				POSITION(
+					x=7.5;
+					y=5;
+					z=0;
+				)
+				
+				MATERIAL(
+					WALL;
+				)
+			}
+			SPHERE{
+				DIMENSIONS(
+					a=3.5;
+					b=3.5;
+					c=3.5;
+				)
+				
+				POSITION(
+					x=11.5;
+					y=5;
+					z=0;
+				)
+				
+				MATERIAL(
+					WALL;
+				)
+			}
+		>
+		SPHERE{
+			DIMENSIONS(
+				a=3.5;
+				b=3.5;
+				c=3.5;
+			)
+			
+			POSITION(
+				x=3.5;
+				y=5;
+				z=0;
+			)
+			
+			MATERIAL(
+				WALL;
+			)
+		}
+	>
+]

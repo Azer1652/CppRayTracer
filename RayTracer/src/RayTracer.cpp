@@ -47,7 +47,7 @@ void RayTracer::init(string fileName, int recursion, int blockSize, bool shadows
 	glutInitWindowSize(WIDTH, HEIGHT);   // Set the window's initial width & height
 	glutInitDisplayMode(GLUT_RGB | GLUT_SINGLE);
 
-	glutCreateWindow("OpenGL Setup Test"); // Create a window with the given title
+	glutCreateWindow("C++ Ray Tracer By Janssens Arthur"); // Create a window with the given title
 
 	// openGL init
 	glMatrixMode(GL_MODELVIEW);

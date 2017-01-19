@@ -233,7 +233,7 @@ Cone* Parser::readCone(){
 
 Cylinder* Parser::readCylinder(){
 	if(RayTracer::debug)
-		cout << "Creating Cone." << endl;
+		cout << "Creating Cylinder." << endl;
 	getline(infile, sCurrentLine);
 	line++;
 	Cylinder* cylinder = new Cylinder();

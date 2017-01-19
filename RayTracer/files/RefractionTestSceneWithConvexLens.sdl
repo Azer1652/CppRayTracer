@@ -89,4 +89,42 @@ OBJECTS[
 			GLASS;
 		)
 	}
+	
+	BOOL<
+		MULTIPLY:
+		SPHERE{
+			DIMENSIONS(
+				a=0.3;
+				b=3;
+				c=3;
+			)
+			
+			POSITION(
+				x=7.2;
+				y=5;
+				z=0;
+			)
+			
+			MATERIAL(
+				GLASS;
+			)
+		}
+		SPHERE{
+			DIMENSIONS(
+				a=0.3;
+				b=3;
+				c=3;
+			)
+			
+			POSITION(
+				x=7.6;
+				y=5;
+				z=0;
+			)
+			
+			MATERIAL(
+				GLASS;
+				reflectivity=0;
+			)
+		}
 ]

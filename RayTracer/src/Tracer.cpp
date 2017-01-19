@@ -42,12 +42,11 @@ void Tracer::start(int recursion, int blockSize, bool shadows, ViewMatrix* matri
 	//start timer
 	clock_t begin = clock();
 
-	/*
+/*
 	//Singlethreaded approach for simplification
 	mans.push_back(new RayManager(this, recursion, blockSize, shadows, matrix));
 	mans[0]->run();
-	*/
-
+*/
 
 	//threads
 	int div = 0;
@@ -71,7 +70,6 @@ void Tracer::start(int recursion, int blockSize, bool shadows, ViewMatrix* matri
 	for(RayManager* man : mans)
 		delete man;
 	mans.clear();
-
 
 	RayTracer::drawn = true;
 	clock_t end = clock();

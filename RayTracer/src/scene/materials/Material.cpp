@@ -117,6 +117,10 @@ TextureMatrix* Material::getTextureMatrix(){
 }
 
 void Material::readBMP(const char* filename){
+	string str(filename);
+	if(str.find("checkered") != string::npos){
+		texture=1;
+	}
 	string s = "./files/textures/";
 	FILE* f = fopen(s.append(filename).c_str(), "rb");
 	if (f!=NULL)

@@ -10,6 +10,7 @@
 #include "../../hdr/Lib.h"
 #include "../../hdr/Ray.h"
 #include "../../hdr/Hit.h"
+#include "../../hdr/scene/materials/Material.h"
 
 #include <cmath>
 
@@ -151,6 +152,11 @@ void Cylinder::hit(Ray* r, vector<Hit*>* hitData){
 												-(ray->getLocation()[1]+ray->getDirection()[1]*t2),
 												0});
 				}
+				if(mat->textureFromFile){
+					hit->originalPosition[0] = ray->getLocation()[0]+ray->getDirection()[0]*t2;
+					hit->originalPosition[1] = ray->getLocation()[1]+ray->getDirection()[1]*t2;
+					hit->originalPosition[2] = ray->getLocation()[2]+ray->getDirection()[2]*t2;
+				}
 
 				//System.out.println("normal: " + hit.getNormal()[0] + " " + hit.getNormal()[1] + " " + hit.getNormal()[2]);
 				//extra hitData
@@ -178,6 +184,11 @@ void Cylinder::hit(Ray* r, vector<Hit*>* hitData){
 					hit->setNormal(new double[3]{-(ray->getLocation()[0]+ray->getDirection()[0]*t1),
 												-(ray->getLocation()[1]+ray->getDirection()[1]*t1),
 												0});
+				}
+				if(mat->textureFromFile){
+					hit->originalPosition[0] = ray->getLocation()[0]+ray->getDirection()[0]*t1;
+					hit->originalPosition[1] = ray->getLocation()[1]+ray->getDirection()[1]*t1;
+					hit->originalPosition[2] = ray->getLocation()[2]+ray->getDirection()[2]*t1;
 				}
 
 				//System.out.println("normal: " + hit.getNormal()[0] + " " + hit.getNormal()[1] + " " + hit.getNormal()[2]);

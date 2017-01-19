@@ -44,7 +44,7 @@ OBJECTS[
 			c=1;
 		)
 		ROTATION(
-			a=90;
+			a=180;
 			b=0;
 			c=0;
 		)
