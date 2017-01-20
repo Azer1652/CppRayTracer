@@ -104,5 +104,10 @@ void RayManager::run(){
 		i+=blockSize;
 	}
 
+	if(this->blockSize > 1){
+		this->blockSize=1;
+		this->run();
+	}
+
 	delete ray;
 }
